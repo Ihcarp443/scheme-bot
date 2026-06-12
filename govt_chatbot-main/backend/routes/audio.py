@@ -61,7 +61,6 @@ audio_bp = Blueprint(
 
 @audio_bp.route("/", methods=["POST"])
 def upload_audio():
-
     if "audio" not in request.files:
         return jsonify({
             "error": "No audio uploaded"

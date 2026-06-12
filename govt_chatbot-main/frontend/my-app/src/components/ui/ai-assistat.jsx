@@ -292,7 +292,7 @@ const handleDeleteThread = async (threadId) => {
     }
   } catch (error) {
     console.error(error);
-    toast.error("Chat could not be delted Try again!")
+    toast.error("Chat could not be deleted. Try again!")
   }
 };
   const [isRecording, setIsRecording] = useState(false);
@@ -396,9 +396,10 @@ const sendAudioToBackend = async (audioBlob) => {
       audioBlob,
       `recording-${Date.now()}.webm`
     );
-
+    console.log("Sending audio")
     const response = await fetch(
-      `${BASE_URL_2}/api/audio/`,
+      // `${BASE_URL}/upload-audio`,
+      `${BASE_URL}/audio/transcribe`,
       {
         method: "POST",
         body: formData,
@@ -407,9 +408,10 @@ const sendAudioToBackend = async (audioBlob) => {
 
     // const data = await response.json();
     // console.log("Backend Response:", data);
+    console.log("TRANSCRIPT CAME:")
     const res = await response.json();
     console.log("Backend Response:", res);
-    const transcript =res.transcription_response.transcript.transcript
+    const transcript =res.transcript.transcript
     setMessages((prev) => [...prev, { text: transcript, isUser: true }]);
     sendTextToBackend(transcript,"audio")
    } catch (error) {
@@ -594,10 +596,6 @@ return (
                   [&_strong]:font-bold
                 "
               >
-                {/* <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                  {msg.text}
-                </ReactMarkdown> */       }
-
                 {msg.isUser ? (
                     <ReactMarkdown remarkPlugins={[remarkGfm]}>
                       {msg.text}
