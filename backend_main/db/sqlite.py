@@ -5,7 +5,6 @@ conn = sqlite3.connect(
     check_same_thread=False
 )
 def create_threads_table(conn):
-
     conn.execute("""
         CREATE TABLE IF NOT EXISTS threads (
             thread_id TEXT PRIMARY KEY,

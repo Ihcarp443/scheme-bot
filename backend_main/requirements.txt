@@ -29,3 +29,5 @@ langsmith
 httpx
 orjson
 gunicorn
+
+langgraph-checkpoint-sqlite

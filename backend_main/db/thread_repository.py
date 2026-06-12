@@ -19,6 +19,7 @@ def save_thread(
     thread_id: str,
     title: str
 ):
+    
     conn = get_db_connection()
 
     conn.execute(

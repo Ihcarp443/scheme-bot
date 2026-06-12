@@ -15,13 +15,15 @@ class ChatRequest(BaseModel):
 
 @router.post("/chat")
 async def chat(req: ChatRequest):
-
-    thread_id = req.thread_id or str(uuid.uuid4())
-    save_thread(
-        thread_id,
-        title=req.message[:50]
-    )
-
+    print(req)
+    if req.thread_id == None:
+        thread_id = req.thread_id or str(uuid.uuid4())
+        save_thread(
+            thread_id,
+            title=req.message[:50]
+        )
+    else:
+        thread_id = req.thread_id
 
     config = {
         "configurable": {
