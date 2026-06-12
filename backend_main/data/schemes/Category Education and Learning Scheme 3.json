@@ -1,0 +1,76 @@
+{
+  "policy_name": "AICTE Saksham Scholarship Scheme For Specially-Abled Student (Degree)",
+  "sector": "Education and Learning",
+  "sections": {
+    "overview": "Saksham is a scholarship scheme by the Ministry of Education implemented by AICTE to support specially-abled students in pursuing technical education. It provides financial assistance to help students continue higher education and build a successful career.",
+    "objective": "The scheme aims to encourage specially-abled students to pursue technical education and ensure equal opportunities by reducing financial barriers.",
+    "eligibility": [
+      "Admission in first year or second year (lateral entry) of degree course in AICTE-approved institutions",
+      "Students with disability of not less than 40%",
+      "Family income should not exceed Rs. 8,00,000 per annum",
+      "Valid income certificate issued by state or UT government"
+    ],
+    "benefits": [
+      "Scholarship of Rs. 50,000 per annum",
+      "Duration up to 4 years for first year students and 3 years for lateral entry students",
+      "Covers tuition fees, computer purchase, books, stationery, equipment, and software",
+      "Disbursed annually through Direct Benefit Transfer (DBT)",
+      "Renewal based on academic progress and submission through National Scholarship Portal"
+    ],
+    "application_process": [
+      "Visit National Scholarship Portal https://scholarships.gov.in/otrapplication/#/ and register",
+      "Complete mobile verification and e-KYC process",
+      "Generate OTR using NSP OTR app and Aadhaar FaceRD app",
+      "Login using OTR and fill application form",
+      "Upload required documents and submit application",
+      "Track payment status on PFMS portal https://pfms.nic.in/static/NewLayoutCommonContent.aspx?RequestPagename=static/TrackNSPpayments.aspx"
+    ],
+    "documents_required": [
+      "Aadhaar card",
+      "10th certificate and mark sheet",
+      "12th certificate and mark sheet (for degree)",
+      "Diploma or ITI certificate for lateral entry",
+      "Category certificate (if applicable)",
+      "Bonafide certificate",
+      "Income certificate",
+      "Promotion certificate for renewal"
+    ],
+    "exclusions": [
+      "Students not promoted to next academic year",
+      "Gap more than two years between qualifying exam and admission",
+      "Students receiving any other scholarship or financial assistance",
+      "Students who drop out or fail",
+      "Students enrolled in non-AICTE approved courses or institutions"
+    ],
+    "faq": [
+      {
+        "question": "Can a 3rd year student apply for Saksham Scholarship?",
+        "answer": "No, only first year or second year (lateral entry) students are eligible."
+      },
+      {
+        "question": "Can students already receiving another scholarship apply?",
+        "answer": "No, students receiving any government scholarship are not eligible."
+      },
+      {
+        "question": "How is the scholarship amount disbursed?",
+        "answer": "It is disbursed through Direct Benefit Transfer (DBT) into the student's bank account."
+      },
+      {
+        "question": "Is Aadhaar mandatory?",
+        "answer": "Yes, Aadhaar and Aadhaar-linked bank account are mandatory."
+      },
+      {
+        "question": "Is there a helpline for queries?",
+        "answer": "Yes, contact saksham@aicte-india.org or 011-29581118."
+      },
+      {
+        "question": "Whom to contact for portal issues?",
+        "answer": "Contact helpdesk@nsp.gov.in for assistance."
+      },
+      {
+        "question": "What are common reasons for application rejection?",
+        "answer": "Reasons include incomplete application, non-AICTE approved course/institute, dual degree enrollment, receiving other scholarships, or missing valid disability certificate."
+      }
+    ]
+  }
+}

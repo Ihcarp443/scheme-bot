@@ -1,0 +1,91 @@
+{
+  "policy_name": "Scheme for Containing Population Decline of Small Minority Communities",
+  "sector": "Health and Wellness",
+  "sections": {
+    "overview": "The scheme, also known as Jiyo Parsi, was launched in 2013 by the Ministry of Minority Affairs to address the declining population of the Parsi community in India through medical, financial, and awareness support.",
+    "objective": "To stop and reverse the decline in the population of the Parsi community by providing medical assistance, supporting childcare and elderly care, and promoting awareness for early diagnosis and treatment.",
+    "eligibility": [
+      "Applicant must belong to the Parsi (Zoroastrian) community",
+      "Applicant must be residing in India"
+    ],
+    "benefits": [
+      "Financial assistance up to ₹6,00,000 for infertility treatments including IVF, surrogacy, ICSI, and donor costs",
+      "Financial assistance up to ₹4,00,000 for childbearing medical expenses",
+      "Post-natal care support up to ₹2,50,000 for newborn care",
+      "₹8,000 per month for child care up to 18 years of age",
+      "₹10,000 per month for each dependent elderly member aged 60 years or above"
+    ],
+    "application_process": [
+      "Register on the portal: https://jiyoparsi.minorityaffairs.gov.in/",
+      "Create and remember user ID and password",
+      "Fill the application form with required details",
+      "Upload all required documents",
+      "Submit the application online",
+      "Save the acknowledgement slip for reference",
+      "Complete annual biometric authentication of family members",
+      "Refer to user manual: https://jiyoparsi.minorityaffairs.gov.in/User_guidelines_for_Beneficiary_Jiyo_Parsi.pdf"
+    ],
+    "documents_required": [
+      "Passport size photograph of the family",
+      "Income Tax Return or income certificate of the couple and elderly members",
+      "Treatment plan (for medical component)",
+      "Doctor’s prescription (for medical component)",
+      "Birth certificate of each child",
+      "Aadhaar card of elderly dependent members",
+      "Cancelled cheque"
+    ],
+    "exclusions": [
+      "NA"
+    ],
+    "faq": [
+      {
+        "question": "For which purposes is financial assistance available?",
+        "answer": "Financial assistance is available for childbearing treatments and for child and elderly care."
+      },
+      {
+        "question": "How much assistance is provided for childbearing treatment?",
+        "answer": "Up to ₹6 lakh for infertility treatment, ₹4 lakh for childbearing expenses, and ₹2.5 lakh for post-natal care."
+      },
+      {
+        "question": "What assistance is provided for child care?",
+        "answer": "₹8,000 per month per child up to 18 years of age."
+      },
+      {
+        "question": "What assistance is provided for elderly care?",
+        "answer": "₹10,000 per month for each dependent elderly member aged 60 years or above."
+      },
+      {
+        "question": "Who is eligible for this scheme?",
+        "answer": "Parsi community members residing in India are eligible."
+      },
+      {
+        "question": "What is the income criterion for treatment assistance?",
+        "answer": "Annual family income should be less than ₹30 lakh."
+      },
+      {
+        "question": "What is the income criterion for child and elderly care assistance?",
+        "answer": "Annual family income should be less than ₹15 lakh."
+      },
+      {
+        "question": "Is assistance available for treatment of elderly dependents?",
+        "answer": "No, assistance is not provided for treatment of elderly dependents."
+      },
+      {
+        "question": "Is assistance available for education or housing?",
+        "answer": "No, assistance is not provided for education or housing."
+      },
+      {
+        "question": "Where can applications be submitted?",
+        "answer": "Applications can be submitted at https://jiyoparsi.minorityaffairs.gov.in/"
+      },
+      {
+        "question": "Is registration mandatory before applying?",
+        "answer": "Yes, registration is mandatory."
+      },
+      {
+        "question": "Is biometric authentication required?",
+        "answer": "Yes, annual biometric authentication of family members is required."
+      }
+    ]
+  }
+}

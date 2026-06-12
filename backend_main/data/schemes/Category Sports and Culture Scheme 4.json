@@ -1,0 +1,60 @@
+{
+  "policy_name": "Akhil Bharatiya Civil Services Pratiyogita",
+  "sector": "Sports and Culture",
+  "sections": {
+    "overview": "The scheme was launched by the Department of Sports, Government of Uttarakhand to provide opportunities for government employees to participate in All-India level sports competitions organized by the Ministry of Personnel, Public Grievances and Pensions.",
+    "objective": "To enable personnel from various government departments in Uttarakhand to participate annually in national-level sports competitions and promote sports engagement among government employees.",
+    "eligibility": [
+      "Applicant must be an employee of a government department in Uttarakhand"
+    ],
+    "benefits": [
+      "Travel allowance provided to participants",
+      "Accommodation allowance provided",
+      "Food allowance provided",
+      "Sports kits provided",
+      "Other necessary support as per departmental standards"
+    ],
+    "applicationprocess": [
+      "Selection trials are conducted at district level",
+      "Selection trials are conducted at state level",
+      "Selected players qualify to participate in All-India competition",
+      "Participation is organized annually"
+    ],
+    "documents_required": [
+      "Aadhaar Card",
+      "Residence proof",
+      "Birth certificate",
+      "Passport size photograph"
+    ],
+    "faq": [
+      {
+        "question": "Who is eligible to participate in the scheme?",
+        "answer": "Any employee of a government department in Uttarakhand is eligible."
+      },
+      {
+        "question": "How are players selected for the competition?",
+        "answer": "Players are selected through trials conducted at district and state levels."
+      },
+      {
+        "question": "What types of support are provided to selected participants?",
+        "answer": "Participants receive travel, accommodation, food allowances, and sports kits as per departmental standards."
+      },
+      {
+        "question": "How often is the competition held?",
+        "answer": "The competition is held annually at the All-India level."
+      },
+      {
+        "question": "How many personnel benefit each year?",
+        "answer": "Approximately 150 personnel benefit from the scheme annually."
+      },
+      {
+        "question": "At what levels are selection trials conducted?",
+        "answer": "Selection trials are conducted at both district and state levels."
+      },
+      {
+        "question": "Can employees from all government departments participate?",
+        "answer": "Yes, employees from all state government departments in Uttarakhand are eligible."
+      }
+    ]
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "policy_name": "National Talent Scholarship Undergraduate",
+  "sector": "Education and Learning",
+  "sections": {
+    "overview": "The National Talent Scholarship (NTS) is implemented by the Indian Council of Agricultural Research (ICAR) to support students pursuing a Bachelor's degree in Agriculture and allied disciplines. It is awarded to students admitted through the All India Entrance Examination (AIEE) and studying in an ICAR-funded Agricultural University outside their State of domicile.",
+    "objective": "The scheme aims to support meritorious students by providing financial assistance during undergraduate studies and promoting higher agricultural education.",
+    "eligibility": [
+      "Student pursuing a Bachelor's degree in Agriculture or allied disciplines",
+      "Admission secured through All India Entrance Examination (AIEE)",
+      "Enrolled in an Agricultural University outside the State of domicile",
+      "University must be funded under ICAR scheme for agricultural education"
+    ],
+    "benefits": [
+      "Scholarship of \u20b93,000 per month during the Bachelor's degree programme"
+    ],
+    "application_process": [
+      "Visit National Scholarship Portal https://scholarships.gov.in/otrapplication/#/ and register",
+      "Complete mobile verification and e-KYC process",
+      "Generate OTR using NSP OTR app and Aadhaar FaceRD app",
+      "Login at https://scholarships.gov.in/otrapplication/#/login-page using OTR credentials",
+      "Fill application form, upload documents, and submit",
+      "Track payment status on PFMS portal https://pfms.nic.in/static/NewLayoutCommonContent.aspx?RequestPagename=static/TrackNSPpayments.aspx"
+    ],
+    "documents_required": [
+      "Passport-size photograph",
+      "Signature",
+      "Thumb impression",
+      "Admission proof through AIEE",
+      "Aadhaar number",
+      "Aadhaar-linked bank account details",
+      "Other documents as prescribed by ICAR or University"
+    ],
+    "exclusions": [
+      "Not specified"
+    ],
+    "faq": [
+      {
+        "question": "Who can apply for the National Talent Scholarship?",
+        "answer": "Students admitted through AIEE to eligible Agricultural Universities outside their State of domicile can apply."
+      },
+      {
+        "question": "Is admission through AIEE necessary?",
+        "answer": "Yes, only students admitted through AIEE are eligible."
+      },
+      {
+        "question": "Can students studying in their home State receive the scholarship?",
+        "answer": "No, the scholarship is only for students studying outside their State of domicile."
+      },
+      {
+        "question": "How long is the scholarship provided?",
+        "answer": "It is awarded initially for one year and renewed for the duration of the course based on performance."
+      },
+      {
+        "question": "What are the academic requirements for renewal?",
+        "answer": "Students must maintain required OGPA/CGPA, clear exams, and show satisfactory conduct."
+      },
+      {
+        "question": "Can a student receive another scholarship along with NTS?",
+        "answer": "No, students cannot receive any other scholarship or financial assistance simultaneously."
+      },
+      {
+        "question": "What happens if a student changes discipline or university?",
+        "answer": "The scholarship will be discontinued."
+      },
+      {
+        "question": "How is the scholarship amount disbursed?",
+        "answer": "It is credited to the student's Aadhaar-linked bank account through DBT."
+      },
+      {
+        "question": "Under what circumstances can the scholarship be discontinued?",
+        "answer": "It may be discontinued due to poor performance, indiscipline, change of course, or receiving another scholarship."
+      },
+      {
+        "question": "What happens if a student withdraws from the course?",
+        "answer": "The scholarship will be stopped and may need to be refunded as per ICAR rules."
+      }
+    ]
+  }
+}

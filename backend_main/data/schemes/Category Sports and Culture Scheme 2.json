@@ -1,0 +1,72 @@
+{
+  "policy_name": "National Service Scheme",
+  "sector": "Sports and Culture",
+  "sections": {
+    "overview": "The National Service Scheme (NSS) is a Central Sector Scheme launched in 1969 by the Government of India. It provides opportunities for students of senior secondary schools, colleges, universities, and technical institutions to participate in community service activities under the principle of education through service.",
+    "objective": "To develop the personality and character of students through voluntary community service and promote social responsibility, leadership, and national integration.",
+    "eligibility": [
+      "Student must be studying in Class 11 or 12, or in graduate, postgraduate, or technical courses",
+      "Student must be enrolled in a recognized institution with an NSS unit",
+      "Student should be willing to participate in community service activities and camps",
+      "Student must comply with NSS guidelines and complete required service hours"
+    ],
+    "benefits": [
+      "Cash award of \u20b95,00,000 for best University or +2 Council",
+      "Cash award of \u20b93,00,000 for upcoming University",
+      "Cash award of \u20b91,50,000 for best Programme Officers",
+      "Cash award of \u20b92,00,000 for best NSS Units",
+      "Cash award of \u20b91,00,000 for best NSS Volunteers",
+      "Development of leadership qualities and confidence",
+      "Promotion of social service and national integration",
+      "Exposure through camps, festivals, and national programs"
+    ],
+    "applicationprocess": [
+      "Contact NSS Programme Officer at the institution",
+      "Fill and submit NSS enrollment form",
+      "Selection based on seat availability and willingness",
+      "Attend orientation after selection",
+      "Participate in NSS activities and camps"
+    ],
+    "documents_required": [
+      "Student identity card",
+      "Admission proof or bonafide certificate",
+      "Aadhaar card or valid ID proof",
+      "Passport size photograph",
+      "NSS enrollment/application form"
+    ],
+    "faq": [
+      {
+        "question": "What is the National Service Scheme (NSS)?",
+        "answer": "It is a government scheme to develop students through community service based on the principle of education through service."
+      },
+      {
+        "question": "When was NSS launched?",
+        "answer": "NSS was launched in 1969."
+      },
+      {
+        "question": "Who can join NSS?",
+        "answer": "Students of Class 11 and 12, graduate, postgraduate, and technical institutions can join NSS."
+      },
+      {
+        "question": "What is the motto of NSS?",
+        "answer": "The motto is 'Not Me But You'."
+      },
+      {
+        "question": "How many students have benefitted from NSS?",
+        "answer": "More than 7.4 crore students have benefitted since its launch."
+      },
+      {
+        "question": "What is a National Integration Camp (NIC)?",
+        "answer": "It is a 7-day residential camp focusing on cultural exchange and national integration among 200 NSS volunteers."
+      },
+      {
+        "question": "What is the NSS Republic Day Parade Camp?",
+        "answer": "It is a camp held in New Delhi where selected volunteers participate in Republic Day parade and cultural events."
+      },
+      {
+        "question": "What is the highest award amount under NSS?",
+        "answer": "The highest award amount is \u20b95,00,000 for the best University or +2 Council."
+      }
+    ]
+  }
+}

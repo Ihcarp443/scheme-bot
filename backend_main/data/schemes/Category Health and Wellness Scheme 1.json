@@ -1,0 +1,69 @@
+{
+  "policy_name": "Swachh Bharat Mission – Grameen Phase I",
+  "sector": "Health and Wellness",
+  "sections": {
+    "overview": "Launched in 2014 by the Department of Drinking Water and Sanitation, Ministry of Jal Shakti, Government of India, the scheme aims to eliminate open defecation in rural India through behavioral change and construction of household and community toilets. It provides financial assistance and awareness support to rural households.",
+    "objective": "To promote sanitation and hygiene behavior, ensure construction and usage of toilets, achieve Open Defecation Free India, and support solid and liquid waste management.",
+    "eligibility": [
+      "Applicant must belong to a rural household without a toilet before the scheme",
+      "Applicant must be from poor, underprivileged, or marginalized sections"
+    ],
+    "benefits": [
+      "Financial assistance of ₹12,000 per toilet for construction",
+      "Improved rural sanitation coverage through household and community toilets",
+      "Reduction in open defecation practices"
+    ],
+    "application_process": [
+      "Register on the UMANG portal: https://web.umang.gov.in/landing/",
+      "Verify mobile number via OTP and create MPIN at https://web.umang.gov.in/web_new/register",
+      "Login using mobile number and MPIN: https://web.umang.gov.in/web_new/login",
+      "Access services and select the relevant department and service",
+      "Fill application form and upload required documents",
+      "Review details, accept terms, and submit application",
+      "Receive confirmation after submission"
+    ],
+    "documents_required": [
+      "Aadhaar Card",
+      "Bank Passbook",
+      "Photograph of constructed toilet",
+      "Other documents if required"
+    ],
+    "exclusions": [
+      "Households already having functional toilets are not eligible"
+    ],
+    "faq": [
+      {
+        "question": "What is the aim of the scheme?",
+        "answer": "To eliminate open defecation in rural India through toilet construction and behavioral change."
+      },
+      {
+        "question": "Who is eligible to apply under the scheme?",
+        "answer": "Rural households without toilet facilities, especially those that are poor, underprivileged, or marginalized."
+      },
+      {
+        "question": "Are households with existing toilets eligible?",
+        "answer": "No, households with existing functional toilets are not eligible."
+      },
+      {
+        "question": "What steps are involved in applying for the scheme?",
+        "answer": "Contact Gram Panchayat, submit documents, construct toilet, verify through geo-tagging, and receive incentive."
+      },
+      {
+        "question": "What kind of toilets were promoted under this scheme?",
+        "answer": "Twin-pit toilets were promoted as a cost-effective and sustainable solution."
+      },
+      {
+        "question": "How does twin pit toilet technology work?",
+        "answer": "Two pits are used alternately. The filled pit is sealed for decomposition, turning waste into safe manure."
+      },
+      {
+        "question": "How long does each pit last?",
+        "answer": "Each pit typically lasts around three years depending on usage."
+      },
+      {
+        "question": "What is the IMIS system used in this scheme?",
+        "answer": "IMIS is used for real-time tracking of toilet construction and verification."
+      }
+    ]
+  }
+}

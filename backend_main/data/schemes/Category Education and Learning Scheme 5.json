@@ -1,0 +1,66 @@
+{
+  "policy_name": "BSR Fellowship Scheme for Science Students - UGC",
+  "sector": "Education and Learning",
+  "sections": {
+    "overview": "The BSR Fellowship Scheme by the University Grants Commission (UGC) supports meritorious students pursuing Ph.D. research in science disciplines by providing financial assistance for advanced studies.",
+    "objective": "The scheme aims to provide opportunities to meritorious candidates to undertake advanced studies and research leading to Ph.D. degrees in sciences.",
+    "eligibility": [
+      "Candidates selected for Ph.D. through regular admission procedures",
+      "University must be recognized under UGC schemes such as Centres of Excellence or Special Assistance",
+      "Candidates must register for full-time Ph.D. programmes"
+    ],
+    "benefits": [
+      "JRF \u20b924,800/month (GATE/NET) or \u20b921,700/month (others) for first 2 years",
+      "SRF \u20b927,900/month (GATE/NET) or \u20b924,800/month (others) for remaining tenure",
+      "Contingency grant \u20b912,000/year (JRF) and \u20b925,000/year (SRF)",
+      "Up to 5 years total fellowship duration",
+      "HRA or accommodation benefits as per rules",
+      "Medical facilities at host institution",
+      "Leave including maternity/paternity as per norms"
+    ],
+    "application_process": [
+      "Apply to identified universities or institutions offering Ph.D.",
+      "Selection is conducted by institution through interview",
+      "Selection committee includes experts and faculty members"
+    ],
+    "documents_required": [
+      "Aadhaar card",
+      "Photograph",
+      "Proof of address",
+      "Contact details",
+      "Bank account details",
+      "Educational qualification certificates",
+      "Supporting documents as required"
+    ],
+    "exclusions": [
+      "Misconduct",
+      "Unsatisfactory research progress",
+      "Ineligible candidates",
+      "Receiving other scholarships",
+      "Employment during research",
+      "Submission of false information"
+    ],
+    "faq": [
+      {
+        "question": "What is the objective of the scheme?",
+        "answer": "To support advanced research leading to Ph.D. degrees in sciences."
+      },
+      {
+        "question": "Who is eligible?",
+        "answer": "Ph.D. candidates selected through regular admission in eligible universities."
+      },
+      {
+        "question": "Is part-time Ph.D. allowed?",
+        "answer": "No, only full-time research candidates are eligible."
+      },
+      {
+        "question": "What is the fellowship duration?",
+        "answer": "Up to 5 years subject to performance."
+      },
+      {
+        "question": "Can fellows take other jobs?",
+        "answer": "No, employment or other scholarships are not allowed."
+      }
+    ]
+  }
+}

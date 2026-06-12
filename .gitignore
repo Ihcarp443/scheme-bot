@@ -44,6 +44,7 @@ temp/
 .vscode/
 .idea/
 .DS_Store
+backend_main/services/
 
 # =========================
 # ML / AI artifacts (IMPORTANT for your project)

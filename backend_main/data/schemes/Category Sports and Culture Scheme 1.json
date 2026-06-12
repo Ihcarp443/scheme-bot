@@ -1,0 +1,72 @@
+{
+  "policy_name": "Scheme For Arjuna Awards For Outstanding Performance In Sports And Games",
+  "sector": "Sports and Culture",
+  "sections": {
+    "overview": "The Arjuna Awards is one of the highest sporting honors of the Government of India, instituted in 1961 and presented annually by the President of India to sportspersons for outstanding performance in sports and games.",
+    "objective": "To recognize outstanding performance in national and international sports and promote qualities such as leadership, discipline, and sportsmanship among athletes.",
+    "eligibility": [
+      "Sportsperson must have consistently good performance at international level over the previous four years",
+      "Must demonstrate leadership, discipline, and sportsmanship",
+      "Achievements in Olympic, Commonwealth, Asian Games, and other international events are considered",
+      "Not eligible if penalized or under inquiry for use of banned substances by WADA/NADA",
+      "Applicable to disciplines such as Olympic, Asian, Commonwealth, World Cup, World Championship, cricket, indigenous games, and para sports",
+      "For lifetime category: must have had international performance and continued contribution to sports after retirement",
+      "Applicant under suspension or ongoing inquiry is not eligible"
+    ],
+    "benefits": [
+      "Cash prize of \u20b915,00,000",
+      "Bronze statuette of Arjuna",
+      "Certificate of recognition",
+      "Ceremonial dress"
+    ],
+    "applicationprocess": [
+      "Register on https://dbtyas-sports.gov.in/ (https://dbtyas-sports.gov.in/)",
+      "Complete one-time registration with personal details and OTP verification",
+      "Login using credentials sent to email",
+      "Update profile details",
+      "Select scheme from 'Schemes' tab and apply",
+      "Submit application online with required documents"
+    ],
+    "documents_required": [
+      "Date of birth proof",
+      "Photograph (JPEG/PNG/JPG up to 5 MB)",
+      "Signature (JPEG/PNG/JPG up to 250 KB)",
+      "Vigilance certificate (if applicable)",
+      "Certificates of international achievements",
+      "Signed undertaking by the sportsperson"
+    ],
+    "exclusions": [
+      "Award will not be given more than once to the same person"
+    ],
+    "faq": [
+      {
+        "question": "What documents are required for applying?",
+        "answer": "Date of birth proof, photograph, signature, vigilance certificate (if applicable), achievement certificates, and signed undertaking are required."
+      },
+      {
+        "question": "What is the cash prize amount?",
+        "answer": "The award includes a cash prize of \u20b915,00,000 along with other honors."
+      },
+      {
+        "question": "Is performance over four years enough for eligibility?",
+        "answer": "No, along with performance, leadership, discipline, and sportsmanship are also required."
+      },
+      {
+        "question": "What is the role of WADA and NADA?",
+        "answer": "Athletes penalized or under investigation for banned substances by WADA/NADA are not eligible."
+      },
+      {
+        "question": "Which disciplines are considered?",
+        "answer": "Olympic, Asian, Commonwealth Games, World events, cricket, indigenous games, and para sports are considered."
+      },
+      {
+        "question": "Where is the award ceremony held?",
+        "answer": "The ceremony is held at a place and date decided by the Government of India."
+      },
+      {
+        "question": "How many awards are given each year?",
+        "answer": "Normally up to 15 awards per year, with flexibility based on performance in major events."
+      }
+    ]
+  }
+}

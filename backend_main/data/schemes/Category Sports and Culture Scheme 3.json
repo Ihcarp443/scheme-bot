@@ -1,0 +1,81 @@
+{
+  "policy_name": "Bima Yojana - Direct Benefit to Artisan",
+  "sector": "Sports and Culture",
+  "sections": {
+    "overview": "Launched on 15th August 2022, this is a social welfare scheme by the Ministry of Textiles to provide financial support to senior and award-winning artisans in the handicraft sector. Applications are submitted offline through Handicrafts Service Centres and the scheme is implemented by the Office of Development Commissioner (Handicrafts).",
+    "objective": "To ensure financial security of senior and award-winning artisans by providing direct monetary assistance and supporting the handicraft sector.",
+    "eligibility": [
+      "Applicant must be a master craftsperson with awards such as Shilp Guru, National Award, Merit Certificate, or similar honors",
+      "Applicant must be 60 years or above (age relaxation for artisans with disabilities)",
+      "Annual income should not exceed \u20b91,00,000",
+      "Applicant should not be receiving similar financial assistance from other sources",
+      "Must submit annual income certificate and affidavit countersigned by a 1st Class Magistrate",
+      "Must be a registered handicraft artisan with valid ID from DC (Handicrafts)"
+    ],
+    "benefits": [
+      "Financial assistance up to \u20b98,000 per month",
+      "Support can be provided as monthly allowance",
+      "Support can be provided as lump sum grant",
+      "Combination of allowance and grant allowed within \u20b98,000 limit",
+      "Direct transfer to artisan\u2019s bank account"
+    ],
+    "applicationprocess": [
+      "Fill the prescribed application form",
+      "Submit application offline at nearest Handicrafts Service Centre",
+      "Provide required documents and recommendation",
+      "Application is verified and processed by the concerned authorities",
+      "Eligible beneficiaries receive direct benefit in bank account"
+    ],
+    "documents_required": [
+      "Aadhaar Card",
+      "Artisan ID proof",
+      "Birth certificate",
+      "Bank account details",
+      "Passport size photograph",
+      "Annual income certificate",
+      "Affidavit countersigned by 1st Class Magistrate"
+    ],
+    "faq": [
+      {
+        "question": "What is the BYDBTA scheme?",
+        "answer": "It is a social welfare scheme providing financial assistance up to \u20b98,000 per month to senior and award-winning artisans."
+      },
+      {
+        "question": "Who is eligible for the scheme?",
+        "answer": "Senior artisans aged 60 or above with national-level awards and annual income below \u20b91,00,000 are eligible."
+      },
+      {
+        "question": "What is the maximum benefit provided?",
+        "answer": "The maximum assistance is \u20b98,000 per month, provided as allowance, lump sum, or both."
+      },
+      {
+        "question": "Is the scheme applicable to all artisans?",
+        "answer": "No, only senior and award-winning artisans meeting eligibility criteria are covered."
+      },
+      {
+        "question": "How can one apply for the scheme?",
+        "answer": "Applicants must apply offline by submitting the form at the nearest Handicrafts Service Centre."
+      },
+      {
+        "question": "What documents are required?",
+        "answer": "Aadhaar, Artisan ID, birth certificate, bank details, photograph, income certificate, and affidavit are required."
+      },
+      {
+        "question": "Can artisans receiving MUDRA loans apply?",
+        "answer": "Yes, if they are not receiving similar financial assistance from other sources and are registered with DC (Handicrafts)."
+      },
+      {
+        "question": "Who implements the scheme?",
+        "answer": "The scheme is implemented by the Office of Development Commissioner (Handicrafts), Ministry of Textiles."
+      },
+      {
+        "question": "Is the benefit transferred directly?",
+        "answer": "Yes, it is transferred directly to the artisan\u2019s bank account linked with Aadhaar."
+      },
+      {
+        "question": "Is yearly renewal required?",
+        "answer": "Yes, beneficiaries must submit an updated income certificate and affidavit every year."
+      }
+    ]
+  }
+}

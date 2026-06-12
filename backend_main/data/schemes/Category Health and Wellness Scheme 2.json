@@ -1,0 +1,81 @@
+{
+  "policy_name": "Scheme For Adolescent Girls",
+  "sector": "Health and Wellness",
+  "sections": {
+    "overview": "A scheme by the Ministry of Women & Child Development to support self-development and empowerment of out-of-school adolescent girls and improve their health, nutrition, and hygiene status. It is implemented through Anganwadi Centres under the ICDS platform.",
+    "objective": "To support out-of-school adolescent girls in transitioning to education or skill training, improve life skills and health awareness, and provide access to public services.",
+    "eligibility": [
+      "Applicant must be female",
+      "Age must be between 11 and 14 years",
+      "Targeted at out-of-school adolescent girls"
+    ],
+    "benefits": [
+      "Take-home ration or hot cooked meal providing 600 calories and 18–20 grams protein for 300 days",
+      "Financial support of ₹9.5 per beneficiary per day for nutrition",
+      "IFA (Iron and Folic Acid) supplementation",
+      "Health check-ups and referral services",
+      "Nutrition and health education",
+      "Counseling on family welfare and childcare practices",
+      "Life skill education and access to public services"
+    ],
+    "application_process": [
+      "Application mode is offline",
+      "Identification is done through a baseline survey conducted by Anganwadi Workers",
+      "Anganwadi Workers visit households to identify eligible girls",
+      "Benefits are provided through the local Anganwadi Centre"
+    ],
+    "documents_required": [
+      "Aadhaar",
+      "Proof of Age or Date of Birth"
+    ],
+    "exclusions": [
+      "NA"
+    ],
+    "faq": [
+      {
+        "question": "What is IFA Supplementation?",
+        "answer": "Iron and Folic Acid supplements are provided to address iron deficiency anaemia under the National Nutrition Anaemia Control Programme."
+      },
+      {
+        "question": "When is the health check-up organized?",
+        "answer": "Health check-ups are organized at least once every three months during Kishori Diwas, often aligned with Village Health & Nutrition Day."
+      },
+      {
+        "question": "What is Kishore Health Card?",
+        "answer": "It records weight, height, BMI, and other services provided and is maintained at Anganwadi Centres."
+      },
+      {
+        "question": "Is a 12-year-old girl eligible?",
+        "answer": "Yes, if she meets the criteria, she is eligible."
+      },
+      {
+        "question": "Can multiple girls from the same family apply?",
+        "answer": "Yes, multiple eligible girls from the same family can apply."
+      },
+      {
+        "question": "Is there any application fee?",
+        "answer": "No, the application process is free."
+      },
+      {
+        "question": "Do I need to visit an AWC for identification?",
+        "answer": "No, the Anganwadi Worker will visit households to collect details."
+      },
+      {
+        "question": "Will Aadhaar details be public?",
+        "answer": "No, Aadhaar information is collected with consent and kept secure as per guidelines."
+      },
+      {
+        "question": "Do I need to submit original documents?",
+        "answer": "No, only photocopies are required."
+      },
+      {
+        "question": "How is the survey data verified?",
+        "answer": "Supervisors verify around 20% of entries for authenticity."
+      },
+      {
+        "question": "Where can I find the survey form?",
+        "answer": "It is available in the annexure of the scheme guidelines."
+      }
+    ]
+  }
+}

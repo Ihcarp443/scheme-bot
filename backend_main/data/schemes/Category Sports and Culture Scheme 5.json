@@ -1,0 +1,86 @@
+{
+  "policy_name": "Tenzing Norgay National Adventure Award",
+  "sector": "Sports and Culture",
+  "sections": {
+    "overview": "The Ministry of Youth Affairs and Sports, Government of India confers the Tenzing Norgay National Adventure Award to recognize achievements in adventure activities and to encourage qualities such as endurance, risk-taking, teamwork, and quick reflexes.",
+    "objective": "To recognize individuals for outstanding achievements in adventure fields and to motivate youth to develop discipline, leadership, and a spirit of adventure.",
+    "eligibility": [
+      "Applicant must have excellent performance in adventure activities",
+      "Must demonstrate leadership qualities, discipline, and a sense of adventure",
+      "Must have continuous achievements in one field: Land, Air, or Water (Sea)",
+      "Awards are given in categories: Land, Water (Sea), Air, and Lifetime Achievement",
+      "Generally, only one award is given per category",
+      "Award can be given posthumously"
+    ],
+    "benefits": [
+      "Bronze statuette",
+      "Certificate",
+      "Blazer with silken tie or saree",
+      "Cash prize of \u20b915,00,000",
+      "Award status equivalent to Arjuna Awards",
+      "Reimbursement of travel expenses (economy airfare or AC 1-tier rail)",
+      "Free boarding and lodging during award ceremony",
+      "Travel and accommodation support for one companion (for women and differently-abled awardees)"
+    ],
+    "applicationprocess": [
+      "Apply online through https://awards.gov.in (https://awards.gov.in)",
+      "Submit application in prescribed format with past performance details",
+      "Upload recommendation letter from competent authorities if applicable",
+      "Serving defence personnel must submit recommendations through their respective directorates",
+      "Applications are reviewed and verified by apex institutions based on category",
+      "Eligible applications are screened by a committee which recommends candidates",
+      "Final decision is made by the Government of India"
+    ],
+    "documents_required": [
+      "Passport size photograph",
+      "Proof of identity",
+      "Proof of address",
+      "Proof of age (10th marksheet)",
+      "Educational qualification certificates",
+      "Signed description of achievements as per guidelines",
+      "Bank mandate form (if selected)",
+      "High-resolution activity photographs",
+      "Measurement details for tailoring",
+      "Supporting documents compiled as a single PDF with achievements and recommendation letters"
+    ],
+    "exclusions": [
+      "Award will not be given twice to the same person in the same category",
+      "Government may cancel or annul the award if the recipient is found unworthy",
+      "Recipient must return the statuette and award money if the award is cancelled"
+    ],
+    "faq": [
+      {
+        "question": "Can a person apply if he/she has already received the award?",
+        "answer": "Yes, but not in the same category. A person cannot receive the award twice in the same category."
+      },
+      {
+        "question": "Who can apply for the award?",
+        "answer": "Any Indian citizen working in the field of adventure or a family member of a posthumous adventurer."
+      },
+      {
+        "question": "How is the recommendation letter submitted?",
+        "answer": "Applicants must collect the recommendation letter and upload a scanned copy along with their application."
+      },
+      {
+        "question": "Can an organization apply for the award?",
+        "answer": "No, only individuals can apply. Applicants must select the option 'Individual'."
+      },
+      {
+        "question": "What should be selected in the nominator type?",
+        "answer": "Applicants should select 'Citizen' in the nominator type field."
+      },
+      {
+        "question": "Is recommendation mandatory for all applicants?",
+        "answer": "It is mandatory for serving defence personnel. Others may provide it if available or mention NA."
+      },
+      {
+        "question": "What documents can be uploaded as supporting documents?",
+        "answer": "Documents showing year-wise achievements must be uploaded as a single PDF along with recommendation letters, properly indexed and numbered."
+      },
+      {
+        "question": "Does submitting the application confirm eligibility?",
+        "answer": "No, eligibility is determined after verification and review of the application."
+      }
+    ]
+  }
+}

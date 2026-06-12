@@ -1,0 +1,77 @@
+{
+  "policy_name": "Niramaya Health Insurance Scheme",
+  "sector": "Health and Wellness",
+  "sections": {
+    "overview": "The Niramaya Health Insurance Scheme was launched by the Department of Empowerment of Persons with Disabilities under the Ministry of Social Justice and Empowerment to provide affordable health insurance to persons with disabilities. The scheme offers coverage up to ₹1,00,000 per year.",
+    "objective": "To provide affordable health insurance coverage to persons with disabilities including autism, cerebral palsy, mental retardation, and multiple disabilities.",
+    "eligibility": [
+      "Person must have at least one disability covered under the National Trust Act, 1999",
+      "Must have a valid disability certificate",
+      "Applicable to persons with disabilities such as autism, cerebral palsy, mental retardation, and multiple disabilities"
+    ],
+    "benefits": [
+      "Health insurance coverage up to ₹1,00,000 per year",
+      "Hospitalization expenses covered up to ₹55,000",
+      "Outpatient treatment including medicines, tests, and diagnostics up to ₹19,000",
+      "Ongoing therapies covered up to ₹20,000",
+      "Alternative medicine (AYUSH) coverage up to ₹4,000",
+      "Transportation expenses covered up to ₹2,000",
+      "Dental preventive care up to ₹4,000",
+      "Coverage for surgeries and non-surgical treatments",
+      "Regular health check-ups and medical care"
+    ],
+    "application_process": [
+      "Visit nearest Registered Organization: https://thenationaltrust.gov.in/content/registered_organization.php",
+      "Submit application through Registered Organization with required documents",
+      "RO verifies and uploads details online for enrollment",
+      "Receive Health ID card after approval",
+      "Renew policy online via https://thenationaltrust.gov.in/auth/renew_gen.php",
+      "Submit claims online via https://portal.mediassist.in/ or offline through claim forms",
+      "Download claim form from https://mediassisttpa.in/#claim-forms for offline submission"
+    ],
+    "documents_required": [
+      "Disability certificate",
+      "Address proof",
+      "Income certificate (for APL category)",
+      "BPL card (for BPL category)",
+      "Proof of payment",
+      "Bank account details with IFSC code",
+      "Medical prescriptions and bills for claims",
+      "Niramaya health card or ID",
+      "Original diagnostic reports and treatment records"
+    ],
+    "exclusions": [
+      "NA"
+    ],
+    "faq": [
+      {
+        "question": "What is the Niramaya scheme?",
+        "answer": "It is a health insurance scheme for persons with disabilities providing coverage up to ₹1,00,000 per year."
+      },
+      {
+        "question": "What benefits are provided under the scheme?",
+        "answer": "It covers hospitalization, OPD treatment, therapies, dental care, surgeries, alternative medicine, and transportation costs."
+      },
+      {
+        "question": "What is the maximum coverage amount?",
+        "answer": "The maximum coverage amount is ₹1,00,000 per year."
+      },
+      {
+        "question": "Who is eligible for the scheme?",
+        "answer": "Persons with disabilities covered under the National Trust Act, 1999 with a valid certificate are eligible."
+      },
+      {
+        "question": "How can I find the nearest Registered Organization?",
+        "answer": "You can visit https://thenationaltrust.gov.in/content/registered_organization.php to find the nearest RO."
+      },
+      {
+        "question": "How can the scheme be renewed?",
+        "answer": "Renewal can be done online through https://thenationaltrust.gov.in/auth/renew_gen.php by providing required details."
+      },
+      {
+        "question": "How can claims be submitted?",
+        "answer": "Claims can be submitted online via https://portal.mediassist.in/ or offline using claim forms from https://mediassisttpa.in/#claim-forms."
+      }
+    ]
+  }
+}

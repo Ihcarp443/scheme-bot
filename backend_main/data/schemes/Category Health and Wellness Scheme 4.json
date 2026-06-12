@@ -1,0 +1,54 @@
+{
+  "policy_name": "RMEWF-Financial Assistance For Medical Treatment Of Ex-Servicemen",
+  "sector": "Health and Wellness",
+  "sections": {
+    "overview": "This scheme provides financial assistance to non-pensioner Ex-Servicemen and their widows of ranks up to Havildar or equivalent to meet routine medical expenses, especially during old age when healthcare costs are high.",
+    "objective": "To support non-pensioner ex-servicemen and their widows who are financially weak by providing assistance for medical treatment and preventing financial hardship due to healthcare costs.",
+    "eligibility": [
+      "Applicant must be a non-pensioner Ex-Serviceman or widow",
+      "Rank must be Havildar or equivalent and below",
+      "Must be recommended by the respective Zila Sainik Board",
+      "Medical expenditure must be incurred at recognized government hospitals under CGHS/ECHS rates"
+    ],
+    "benefits": [
+      "Financial assistance up to \u20b930,000 per year",
+      "Support provided for routine medical expenses",
+      "Separate scheme exists for serious diseases"
+    ],
+    "applicationprocess": [
+      "Visit https://ksb.gov.in/ (https://ksb.gov.in/)",
+      "Register on the portal and fill required details",
+      "Upload photograph and save application",
+      "Activate account using email link",
+      "Login and select the scheme",
+      "Fill and submit application with documents",
+      "Get documents attested by ZSWO and upload",
+      "Application is verified and recommended by ZSWO",
+      "Processed by Kendriya Sainik Board for approval",
+      "Payment is transferred through ECS after approval",
+      "Track status using DAK ID on portal"
+    ],
+    "documents_required": [
+      "Discharge book or service documents",
+      "Identity card issued by Zila Sainik Board",
+      "Original medical bills signed by doctor",
+      "Hospital discharge summary",
+      "Self-declaration of not receiving other medical assistance",
+      "Bank details of SBI or PNB account with IFSC"
+    ],
+    "faq": [
+      {
+        "question": "Can treatment be taken in any hospital?",
+        "answer": "No, assistance is only for treatment in recognized government hospitals under CGHS/ECHS rates."
+      },
+      {
+        "question": "Can bank details of any bank be provided?",
+        "answer": "No, only SBI or PNB bank account details are accepted."
+      },
+      {
+        "question": "Whose bank account details should be provided?",
+        "answer": "The applicant must provide their Aadhaar-linked bank account details."
+      }
+    ]
+  }
+}
