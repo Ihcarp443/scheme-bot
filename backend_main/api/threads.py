@@ -2,8 +2,9 @@ from fastapi import APIRouter
 
 from db.thread_repository import get_all_threads
 from db.thread_repository import delete_thread
-
+from graph.graph_builder import graph
 router = APIRouter()
+
 
 @router.get("/")
 async def list_threads():
@@ -13,7 +14,6 @@ async def list_threads():
         "threads": get_all_threads()
     }
 
-from graph.graph_builder import graph
 @router.get("/{thread_id}")
 async def get_thread_messages(
     thread_id: str
@@ -28,7 +28,8 @@ async def get_thread_messages(
     try:
 
         state = graph.get_state(config)
-
+        # print("thread-grpah-state")
+        # print(state)
         return {
             "success": True,
             "thread_id": thread_id,

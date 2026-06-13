@@ -4,6 +4,9 @@ from services.sarvam_service import (
     text_to_speech
 )
 
+from services.helper import (
+    add_chat_message
+)
 from langchain_core.messages import HumanMessage,AIMessage
 
 
@@ -18,7 +21,13 @@ def text_input_node(state):
         "user_lang": result["user_lang"],
         "messages": [
             HumanMessage(content=result["query"])
-        ]
+        ],
+        "chat_history": add_chat_message(
+        state,
+        "user",
+        state["input_text"],
+        result["user_lang"]
+    )
     }
 
 
@@ -34,8 +43,14 @@ def translate_node_for_user(state):
     return {
         "final_answer": translated,
         "messages": [
-            AIMessage(content=translated)
-        ]
+            AIMessage(content=state["answer_en"])
+        ],
+        "chat_history": add_chat_message(
+        state,
+        "assistant",
+        translated,
+        state["user_lang"]
+    )
     }
 
 def dictate_answer_node(state):

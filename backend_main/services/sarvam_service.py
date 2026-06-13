@@ -70,3 +70,15 @@ def text_to_speech(state):
         raise ValueError("TTS failed: empty response")
     audio_base64 = response.audios[0]
     return audio_base64
+
+
+def dictate_text(lang,text):
+    response = client.text_to_speech.convert(
+        text=text,
+        target_language_code=lang
+    )
+    print("TTS:")
+    if not response:
+        raise ValueError("TTS failed: empty response")
+    audio_base64 = response.audios[0]
+    return audio_base64

@@ -5,6 +5,7 @@ from api.chat import router as chat_router
 from api.audio import router as audio_router
 from api.grievance import router as grievance_router
 from api.threads import router as threads_router
+from api.dictate_text  import router as dictate_router
 # from api.upload_audio import router as upload_audio_router
 
 app = FastAPI(
@@ -24,7 +25,7 @@ app.include_router(chat_router, prefix="/chat", tags=["Chat"])
 app.include_router(audio_router, prefix="/audio", tags=["Audio"])
 app.include_router(threads_router, prefix="/threads", tags=["Threads"])
 app.include_router(grievance_router, prefix="/grievance", tags=["Grievance"])
-# app.include_router(upload_audio_router, prefix="/upload-audio", tags=["Audio upload"])
+app.include_router(dictate_router, prefix="/play", tags=["playback"])
 
 
 

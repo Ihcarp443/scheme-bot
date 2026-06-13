@@ -65,7 +65,8 @@ async def chat(req: ChatRequest):
             "thread_id": thread_id,
             "interrupt": False,
             "answer": result.get("final_answer", ""),
-            "audio": result.get("filename","")
+            "audio": result.get("filename",""),
+            "user_lang":result.get("user_lang")
         }
         
 

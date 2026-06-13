@@ -64,13 +64,13 @@ const AIMessageBar = () => {
     if (res.status === "interrupt") {
 
       setInterruptData(res.interrupt);
-
+      user_lang=res.user_lang;
       setMessages(prev => [
         ...prev,
         ...res.interrupt.questions.map(q => ({
           text: q,
           isUser: false,
-          
+          lang:user_lang
         }))
       ]);
 
@@ -129,10 +129,11 @@ const AIMessageBar = () => {
       const state = res.state;
 
       const restoredMessages =
-        (state.messages || []).map((msg) => ({
-          text: msg.content,
-          isUser: msg.type === "human",
-          animate:false
+        (state.chat_history || []).map((msg) => ({
+          text: msg.text,
+          isUser: msg.role === "user",
+          animate:false,
+          lang:msg.lang
         }));
         setTimeout(()=>{
             setloadPastChat(false)
@@ -226,7 +227,8 @@ const AIMessageBar = () => {
           ...res.data.questions.map(q => ({
             text: q,
             isUser: false,
-            animate:true
+            animate:true,
+            lang:q.user_lang
           }))
         ]);
 
@@ -235,13 +237,16 @@ const AIMessageBar = () => {
       }
       setIsTyping(false)
       const fin=res.answer
-      setMessages((prev) => [...prev, { text: fin, isUser: false ,animate:true }]);
+      const user_lang=res.user_lang
+      setMessages((prev) => [...prev, { text: fin, isUser: false ,animate:true ,lang:user_lang }]);
       if (input_t === "audio" && res.audio) {
-        playBase64Audio(res.audio);
+        const audio = new Audio(`data:audio/wav;base64,${res.audio}`);
+        audio.play();
+        // playBase64Audio(res.audio);
       }
     }
     else{
-    toast.error("Can't fetch answer Try later!")
+    toast.error("Can't fetch answer Try again!")
     }
    } catch (error) {
     console.error(error);
@@ -422,6 +427,7 @@ const sendAudioToBackend = async (audioBlob) => {
   const clearChat = () => {
     setMessages([]);
     set_threadID(null);
+    setSelectedThread(null);
   };
 
   // Scroll to bottom when messages change
@@ -430,15 +436,46 @@ const sendAudioToBackend = async (audioBlob) => {
   }, [messages]);
 
 
-  const speakText = (text) => {
-  const speech = new SpeechSynthesisUtterance(text);
+  const speakText = async(text,lang) => {
+    try 
+    {
+      console.log(text)
+      console.log(lang)
+    const response = await fetch(`${BASE_URL}/play/dictate_text`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_lang: lang,
+        text: text,
+      }),
+    });
 
-  speech.lang = "auto";
-  speech.rate = 1;
-  speech.pitch = 1;
+    const data = await response.json();
+    console.log(data)
+    if (data.success) {
+      console.log("Audio received:", data.audio);
+      // playBase64Audio(data.audio)
+      // If backend returns base64 audio
+      const audio = new Audio(`data:audio/wav;base64,${data.audio}`);
+      audio.play();
 
-  window.speechSynthesis.cancel(); // stop previous speech
-  window.speechSynthesis.speak(speech);
+    } else {
+      console.error("Error:", data.error);
+    }
+
+  } catch (error) {
+    console.error("API call failed:", error);
+  }
+  // const speech = new SpeechSynthesisUtterance(text);
+
+  // speech.lang = "hi-IN";
+  // speech.rate = 1;
+  // speech.pitch = 1;
+
+  // window.speechSynthesis.cancel(); // stop previous speech
+  // window.speechSynthesis.speak(speech);
 };
 
 
@@ -659,7 +696,7 @@ return (
                       </button>
 
                     <button
-                        onClick={() => speakText(msg.text)}
+                        onClick={() => speakText(msg.text,msg.lang)}
                         className="
                           p-1
                           rounded-md

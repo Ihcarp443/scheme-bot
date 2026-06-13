@@ -49,10 +49,11 @@ async def resume_grievance(req: ResumeRequest):
 
         return {
             "status": "interrupt",
-            "interrupt": interrupt_data
+            "interrupt": interrupt_data,
         }
 
     return {
         "status": "completed",
-        "answer": result.get("final_answer")
+        "answer": result.get("final_answer"),
+        "user_lang":result.get("user_lang")
     }

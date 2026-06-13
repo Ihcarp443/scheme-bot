@@ -2,6 +2,10 @@ from typing import TypedDict, List, Annotated
 from langchain_core.messages import BaseMessage
 from langgraph.graph.message import add_messages
 
+class ChatMessage(TypedDict):
+    role: str
+    text: str
+    lang: str
 
 class GraphState(TypedDict, total=False):
     input_text: str
@@ -23,3 +27,5 @@ class GraphState(TypedDict, total=False):
     complaint_data: dict
 
     messages: Annotated[List[BaseMessage], add_messages]
+
+    chat_history: List[ChatMessage]
