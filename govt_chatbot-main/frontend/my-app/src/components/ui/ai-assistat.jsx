@@ -157,27 +157,27 @@ const AIMessageBar = () => {
   }, []);
 
 
-  function playBase64Audio(base64Audio){
-      // 1. decode base64
-      const byteCharacters = atob(base64Audio);
+  // function playBase64Audio(base64Audio){
+  //     // 1. decode base64
+  //     const byteCharacters = atob(base64Audio);
 
-      const byteNumbers = new Array(byteCharacters.length);
-      for (let i = 0; i < byteCharacters.length; i++) {
-        byteNumbers[i] = byteCharacters.charCodeAt(i);
-      }
+  //     const byteNumbers = new Array(byteCharacters.length);
+  //     for (let i = 0; i < byteCharacters.length; i++) {
+  //       byteNumbers[i] = byteCharacters.charCodeAt(i);
+  //     }
     
-      const byteArray = new Uint8Array(byteNumbers);
+  //     const byteArray = new Uint8Array(byteNumbers);
     
-      // 2. create blob (IMPORTANT: adjust type if needed)
-      const audioBlob = new Blob([byteArray], { type: "audio/wav" });
+  //     // 2. create blob (IMPORTANT: adjust type if needed)
+  //     const audioBlob = new Blob([byteArray], { type: "audio/wav" });
     
-      // 3. create URL
-      const audioUrl = URL.createObjectURL(audioBlob);
+  //     // 3. create URL
+  //     const audioUrl = URL.createObjectURL(audioBlob);
     
-      // 4. play
-      const audio = new Audio(audioUrl);
-      audio.play();
-    }   
+  //     // 4. play
+  //     const audio = new Audio(audioUrl);
+  //     audio.play();
+  //   }   
 
 
   
