@@ -14,7 +14,7 @@ import {
 import { Toaster } from "@/components/ui/sonner";
 const AIMessageBar = () => {
   // const BASE_URL = process.env.ENDPOINT;
-  const BASE_URL = process.env.NEXT_PUBLIC_ENDPOINT;
+  const BASE_URL = process.env.NEXT_PUBLIC_ENDPOINT || "http://50.19.164.128:8000";
   const BASE_URL_2 = process.env.NEXT_PUBLIC_ENDPOINT_2;
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([]);
