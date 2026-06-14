@@ -312,7 +312,7 @@ def retrieve_node(state: GraphState):
         )
 
     print(
-        f"Retrieved {len(results)} documents"
+        f"Retrieved {len(results)} documents ,{results}"
     )
 
     return {

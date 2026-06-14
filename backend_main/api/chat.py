@@ -30,7 +30,6 @@ async def chat(req: ChatRequest):
             "thread_id": thread_id
         }
     }
-
     state = {
         # "input_type": "text",
         "input_type": req.input_type,

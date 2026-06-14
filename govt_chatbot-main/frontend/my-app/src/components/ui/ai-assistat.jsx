@@ -33,11 +33,23 @@ const AIMessageBar = () => {
 
   const resumeInterrupt = async(userInput) => {
 
-  try {
-
-    const field =
-      interruptData.missing_fields[0];
-
+  try {  
+    setIsTyping(true);
+    const field =interruptData.missing_fields[0];
+    console.log("userInturrp",userInput)
+    if(isNaN(userInput)){
+      setIsTyping(false);
+      // const mess="You must enter APPLICATION ID only, An application ID is just a number for eg: if 3253234"
+      toast.warning("Applicatio ID should be Number.")
+      // setMessages(prev => [
+      //   ...prev,{
+      //     text: mess,
+      //     isUser: false,
+      //     error:true
+      //   }
+      // ]);
+      return
+    }
     const payload = {
       thread_id: String(threadID),
       data: {
@@ -55,7 +67,7 @@ const AIMessageBar = () => {
         body: JSON.stringify(payload)
       }
     );
-
+    setIsTyping(false);
     const res = await response.json();
 
     console.log(res);
@@ -70,7 +82,7 @@ const AIMessageBar = () => {
         ...res.interrupt.questions.map(q => ({
           text: q,
           isUser: false,
-          lang:user_lang
+          lang:user_lang,
         }))
       ]);
 
@@ -88,8 +100,9 @@ const AIMessageBar = () => {
         isUser: false
       }
     ]);
-
   } catch(err) {
+    setIsTyping(false);
+    toast.error("Something went wrong !")
     console.error(err);
   }
 };
@@ -157,27 +170,7 @@ const AIMessageBar = () => {
   }, []);
 
 
-  // function playBase64Audio(base64Audio){
-  //     // 1. decode base64
-  //     const byteCharacters = atob(base64Audio);
 
-  //     const byteNumbers = new Array(byteCharacters.length);
-  //     for (let i = 0; i < byteCharacters.length; i++) {
-  //       byteNumbers[i] = byteCharacters.charCodeAt(i);
-  //     }
-    
-  //     const byteArray = new Uint8Array(byteNumbers);
-    
-  //     // 2. create blob (IMPORTANT: adjust type if needed)
-  //     const audioBlob = new Blob([byteArray], { type: "audio/wav" });
-    
-  //     // 3. create URL
-  //     const audioUrl = URL.createObjectURL(audioBlob);
-    
-  //     // 4. play
-  //     const audio = new Audio(audioUrl);
-  //     audio.play();
-  //   }   
 
 
   
@@ -228,7 +221,7 @@ const AIMessageBar = () => {
             text: q,
             isUser: false,
             animate:true,
-            lang:q.user_lang
+            lang:q.user_lang,
           }))
         ]);
 
@@ -238,7 +231,7 @@ const AIMessageBar = () => {
       setIsTyping(false)
       const fin=res.answer
       const user_lang=res.user_lang
-      setMessages((prev) => [...prev, { text: fin, isUser: false ,animate:true ,lang:user_lang }]);
+      setMessages((prev) => [...prev, { text: fin, isUser: false ,animate:true ,lang:user_lang}]);
       if (input_t === "audio" && res.audio) {
         const audio = new Audio(`data:audio/wav;base64,${res.audio}`);
         audio.play();
@@ -246,6 +239,7 @@ const AIMessageBar = () => {
       }
     }
     else{
+      setIsTyping(false)
     toast.error("Can't fetch answer Try again!")
     }
    } catch (error) {
@@ -456,10 +450,11 @@ const sendAudioToBackend = async (audioBlob) => {
     console.log(data)
     if (data.success) {
       console.log("Audio received:", data.audio);
-      // playBase64Audio(data.audio)
-      // If backend returns base64 audio
       const audio = new Audio(`data:audio/wav;base64,${data.audio}`);
-      audio.play();
+       setTimeout(() => {
+    
+    audio.play();
+  }, 1000);
 
     } else {
       console.error("Error:", data.error);
@@ -616,7 +611,7 @@ return (
                   `}
                 >
               <div
-                className="
+                className={`
                   text-md
                   leading-[1.6]
                   tracking-[0.2px]
@@ -631,7 +626,10 @@ return (
                   [&_li]:my-1
                   [&_p]:mb-2
                   [&_strong]:font-bold
-                "
+                  ${!msg.user && msg.error ?
+                    " text-red-400 font-semibold": ""
+                  }
+                  `}
               >
                 {msg.isUser ? (
                     <ReactMarkdown remarkPlugins={[remarkGfm]}>
@@ -643,7 +641,7 @@ return (
                     <TextType
                       text={msg?.text || ""}
                       typingSpeed={30}
-                      pauseDuration={50}
+                      // pauseDuration={50}
                       showCursor={true}
                       cursorCharacter="|"
                       variableSpeed={{
@@ -695,19 +693,20 @@ return (
                         <ThumbsDown size={14} />
                       </button>
 
-                    <button
-                        onClick={() => speakText(msg.text,msg.lang)}
-                        className="
-                          p-1
-                          rounded-md
-                          text-slate-500
-                          hover:text-slate-200
-                          hover:bg-slate-800
-                          cursor-pointer
-                        "
-                      >
-                        <Volume2 size={18} />
-                      </button>
+                        <button
+                          onClick={() => speakText(msg.text, msg.lang)}
+                          className="
+                            p-1
+                            rounded-md
+                            text-slate-500
+                            hover:text-slate-200
+                            hover:bg-slate-800
+                            cursor-pointer
+                          "
+                        >
+                          <Volume2 size={18} />
+                        </button>
+                      
                     </div>
                     )}
 
@@ -719,9 +718,9 @@ return (
                         <div className="flex justify-start">
                           <div className="bg-slate-800 border border-slate-700 rounded-2xl px-4 py-3">
                             <div className="flex gap-2">
-                              <div className="w-2 h-2 rounded-full bg-indigo-400 animate-pulse" />
-                              <div className="w-2 h-2 rounded-full bg-indigo-400 animate-pulse delay-75" />
-                              <div className="w-2 h-2 rounded-full bg-indigo-400 animate-pulse delay-150" />
+                              <div className="w-2 h-2 rounded-full bg-indigo-400 animate-bounce animation-duration:[0.5s]" />
+                              <div className="w-2 h-2 rounded-full bg-indigo-400 animate-bounce delay-100 animation-duration:[0.5s]" />
+                              <div className="w-2 h-2 rounded-full bg-indigo-400 animate-bounce delay-200 animation-duration:[0.5s]" />
                             </div>
                           </div>
                         </div>

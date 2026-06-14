@@ -19,7 +19,7 @@ def simulate_payment_status(data):
     responses = [
         {
             "status": "success",
-            "message": "Payment credited successfully."
+            "message": "Payment already credited successfully."
         },
         {
             "status": "pending",
