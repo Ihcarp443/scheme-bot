@@ -135,6 +135,9 @@ export function BeamsBackground({
         };
     }, [intensity]);
     const router = useRouter();
+    useEffect(() => {
+          router.prefetch("/chat");
+        }, []);
     return (
         <div
             className={cn("relative min-h-screen w-full overflow-hidden bg-neutral-950", className)}>
