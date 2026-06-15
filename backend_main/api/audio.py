@@ -80,15 +80,23 @@ async def transcribe_audio(
             wav_path
         )
 
-
+        
         # Convert WAV → Text
-        transcript = speech_to_text(wav_path)
-
+        try:
+            transcript = speech_to_text(wav_path)
+    
+        except Exception as e:
+                print("Speech to text error:", e)
+                return {
+                    "success": False,
+                    "message": "Unable to transcribe audio",
+                    "error": str(e)
+                }
+    
         return {
             "success": True,
             "transcript": transcript
         }
-
         
     except Exception as e:
 

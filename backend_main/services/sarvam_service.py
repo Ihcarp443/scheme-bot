@@ -10,13 +10,18 @@ client = SarvamAI(
 )
 
 def translate_to_english(query):
-    response = client.text.translate(
-    input=query,
-    source_language_code="auto",
-    target_language_code="en-IN",
-    )
-    # print(response)
-    return {'user_lang': response.source_language_code, 'query':response.translated_text}
+    try:
+        response = client.text.translate(
+        input=query,
+        source_language_code="auto",
+        target_language_code="en-IN",
+        )
+        return {'user_lang': response.source_language_code, 'query':response.translated_text}
+    except:
+        print("Translation to language failde::")
+        raise Exception("Translation failed")
+
+    
 
 def translate_to_user_language(response, user_lang):
     
@@ -28,14 +33,18 @@ def translate_to_user_language(response, user_lang):
     return llmresponse.translated_text
 
 def speech_to_text(filepath):
-    with open(filepath, "rb") as audio_file:
-        response = client.speech_to_text.transcribe(
-            file=audio_file
-        )
-
-    return {
+    try:
+        with open(filepath, "rb") as audio_file:
+            response = client.speech_to_text.transcribe(
+                file=audio_file
+            )
+        return {
         "transcript": response.transcript
-    }
+        }
+    except:
+        print("Translation to language failed::")
+        raise Exception("Translation failed")
+    
 
 
 # def text_to_speech(state):

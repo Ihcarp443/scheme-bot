@@ -58,9 +58,9 @@ def extract_filters_from_llm_node(state: GraphState):
     prompt = FILTER_PROMPT.format(
         query=query
     )
-    print("Filter Extraction Prompt:", prompt)
+    # print("Filter Extraction Prompt:", prompt)
     response = model.invoke(prompt)
-    print("LLM Filter Extraction Response:", response.content)
+    # print("LLM Filter Extraction Response:", response.content)
 
     try:
 
@@ -159,162 +159,164 @@ def retrieve_node(state: GraphState):
     }
     
     
-import json
+# import json
 
-from graph.state import GraphState
-from services.llm_service import model
-from rag.retriever import retrieve_documents
-
-
-FILTER_PROMPT = """
-You are an intelligent query parser for a government policy chatbot.
-
-Your task is to extract structured filters from the user query.
-
-Extract the following fields if present:
-
-- policy_name
-- sector
-- section
-
-Rules:
-
-- Only extract values if clearly mentioned
-- Normalize section names to one of:
-    eligibility
-    benefits
-    application_process
-    documents_required
-    faq
-    exclusions
-
-- If not found, set value as null
-
-Return ONLY valid JSON.
-
-Example:
-
-Query:
-"What are benefits of PM Kisan?"
-
-Output:
-{{
-    "policy_name": "PM Kisan",
-    "section": "benefits",
-    "sector": null
-}}
-
-Now process:
-
-Query:
-"{query}"
-"""
+# from graph.state import GraphState
+# from services.llm_service import model
+# from rag.retriever import retrieve_documents
 
 
-def extract_filters_from_llm_node(state: GraphState):
-    print('Extracting filters from LLM for query:', state["query_en"])
+# FILTER_PROMPT = """
+# You are an intelligent query parser for a government policy chatbot.
 
-    query = state["query_en"]
+# Your task is to extract structured filters from the user query.
 
-    prompt = FILTER_PROMPT.format(
-        query=query
-    )
-    print("Filter Extraction Prompt:", prompt)
-    response = model.invoke(prompt)
-    print("LLM Filter Extraction Response:", response.content)
+# Extract the following fields if present:
 
-    try:
+# - policy_name
+# - sector
+# - section
 
-        filters = json.loads(
-            response.content
-        )
+# Rules:
 
-    except Exception:
+# - Only extract values if clearly mentioned
+# - Normalize section names to one of:
+#     eligibility
+#     benefits
+#     application_process
+#     documents_required
+#     faq
+#     exclusions
 
-        filters = {}
+# - If not found, set value as null
 
-    # print(type(filters))
-    print("Extracted Filters:", filters)
-    filters = {
-        k: v
-        for k, v in filters.items()
-        if v not in [None, "", "null"]
-    }
+# Return ONLY valid JSON.
 
-    print("Extracted Filters:", filters)
+# Example:
 
-    return {
-        "filters": filters
-    }
+# Query:
+# "What are benefits of PM Kisan?"
+
+# Output:
+# {{
+#     "policy_name": "PM Kisan",
+#     "section": "benefits",
+#     "sector": null
+# }}
+
+# Now process:
+
+# Query:
+# "{query}"
+# """
 
 
-def retrieve_node(state: GraphState):
-    print('Retrieving documents for query:', state["query_en"])
 
-    query = state["query_en"]
 
-    filters = state.get(
-        "filters",
-        {}
-    )
+# def extract_filters_from_llm_node(state: GraphState):
+#     print('Extracting filters from LLM for query:', state["query_en"])
 
-    if filters:
+#     query = state["query_en"]
 
-        try:
+#     prompt = FILTER_PROMPT.format(
+#         query=query
+#     )
+#     print("Filter Extraction Prompt:", prompt)
+#     response = model.invoke(prompt)
+#     print("LLM Filter Extraction Response:", response.content)
 
-            results = retrieve_documents(
-                query=query,
-                filters=filters
-            )
+#     try:
 
-        except Exception:
+#         filters = json.loads(
+#             response.content
+#         )
 
-            results = []
+#     except Exception:
 
-    else:
+#         filters = {}
 
-        results = retrieve_documents(
-            query
-        )
+#     # print(type(filters))
+#     print("Extracted Filters:", filters)
+#     filters = {
+#         k: v
+#         for k, v in filters.items()
+#         if v not in [None, "", "null"]
+#     }
 
-    if not results:
+#     print("Extracted Filters:", filters)
 
-        print(
-            "No results with filters. Trying fallback..."
-        )
+#     return {
+#         "filters": filters
+#     }
 
-        if "policy_name" in filters:
 
-            relaxed = {
-                "policy_name":
-                filters["policy_name"]
-            }
+# def retrieve_node(state: GraphState):
+#     print('Retrieving documents for query:', state["query_en"])
 
-            try:
+#     query = state["query_en"]
 
-                results = retrieve_documents(
-                    query,
-                    filter=relaxed
-                )
+#     filters = state.get(
+#         "filters",
+#         {}
+#     )
 
-            except Exception:
+#     if filters:
 
-                pass
+#         try:
 
-    if not results:
+#             results = retrieve_documents(
+#                 query=query,
+#                 filters=filters
+#             )
 
-        print(
-            "No results from fallback. Using pure semantic search..."
-        )
+#         except Exception:
 
-        results = retrieve_documents(
-            query
-        )
+#             results = []
 
-    print(
-        f"Retrieved {len(results)} documents ,{results}"
-    )
+#     else:
 
-    return {
-        "docs": results
-    }
+#         results = retrieve_documents(
+#             query
+#         )
+
+#     if not results:
+
+#         print(
+#             "No results with filters. Trying fallback..."
+#         )
+
+#         if "policy_name" in filters:
+
+#             relaxed = {
+#                 "policy_name":
+#                 filters["policy_name"]
+#             }
+
+#             try:
+
+#                 results = retrieve_documents(
+#                     query,
+#                     filter=relaxed
+#                 )
+
+#             except Exception:
+
+#                 pass
+
+#     if not results:
+
+#         print(
+#             "No results from fallback. Using pure semantic search..."
+#         )
+
+#         results = retrieve_documents(
+#             query
+#         )
+
+#     print(
+#         f"Retrieved {len(results)} documents ,{results}"
+#     )
+
+#     return {
+#         "docs": results
+#     }

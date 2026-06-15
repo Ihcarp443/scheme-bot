@@ -58,7 +58,10 @@ async def chat(req: ChatRequest):
                 "interrupt": True,
                 "data": interrupt_data
             }
-
+        # if result.get("language_probability") < 0.70:
+        #     print("Error: Audio quality too low or language not natively supported.")
+        # else:
+        #     print("Transcription:", result.get("transcript"))
         return {
             "success": True,
             "thread_id": thread_id,
@@ -72,7 +75,17 @@ async def chat(req: ChatRequest):
     except Exception as e:
         traceback.print_exc()
         return {
-            "success": False,
+            "success": True,
             "thread_id": thread_id,
-            "error": str(e)
+            "interrupt": False,
+            "answer": "Language not supported",
+            # "audio": result.get("filename",""),
+            # "user_lang":result.get("user_lang")
         }
+        
+        # return {
+
+        #     "success": False,
+        #     "thread_id": thread_id,
+        #     "error": str(e)
+        # }

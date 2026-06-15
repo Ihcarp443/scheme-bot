@@ -20,8 +20,8 @@ GRIEVANCE_TYPES = {
 
 def grievance_tool_node(state: GraphState):
 
-    print("FULL STATE")
-    print(state)
+    # print("FULL STATE")
+    # print(state)
 
     print(
         "complaint_data:",
@@ -83,21 +83,21 @@ def grievance_tool_node(state: GraphState):
         })
     print("All data present, processing grievance...")
 
-    # if issue_type =="application_issue" :
-    if issue_type == "payment_delay":
+    if issue_type =="application_issue" :
+    # if issue_type == "payment_delay":
         result = simulate_payment_status(
             data
         )
 
         return {
             "final_answer": f"""
-Status: {result['status'].upper()}
-Message: {result['message']}
-"""
+            Status: {result['status'].upper()}
+            Message: {result['message']}
+            """
         }
 
-    # if issue_type == "payment_delay":
-    if issue_type =="application_issue":
+    if issue_type == "payment_delay":
+    # if issue_type =="application_issue":
         preview = f"""
             # Complaint Preview
 

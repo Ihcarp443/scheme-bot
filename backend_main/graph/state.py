@@ -26,6 +26,8 @@ class GraphState(TypedDict, total=False):
 
     complaint_data: dict
 
+    selected_route: str
+
     messages: Annotated[List[BaseMessage], add_messages]
 
     chat_history: List[ChatMessage]
