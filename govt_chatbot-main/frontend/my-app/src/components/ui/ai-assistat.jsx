@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Send, Sparkles, X, Loader2 ,Mic, Square, Trash,NotebookPen  , PlusCircleIcon ,Volume2} from "lucide-react";
+import { Send, Sparkles, X, Loader2 ,Mic, Square, Trash,NotebookPen  , PlusCircleIcon ,Volume2,Paperclip} from "lucide-react";
 import { toast } from "sonner";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -24,6 +24,7 @@ const AIMessageBar = () => {
   const [timeLeft, setTimeLeft] = useState(0);
   const[threadID,set_threadID]=useState("")
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const fileInputRef = useRef(null);
   // adding threads
   const [threads, setThreads] = useState([]);
   const [interrupt, setInterrupt] = useState(false);
@@ -240,7 +241,11 @@ const AIMessageBar = () => {
     }
     else{
       setIsTyping(false)
-    toast.error("Can't fetch answer Try again!")
+      if(res.error == "Translation failed"){
+        toast.error("This Language is not supported, Try some other languages.")
+        return
+      }
+      toast.error("Can't fetch answer Try again!")
     }
    } catch (error) {
     console.error(error);
@@ -377,6 +382,27 @@ const stopRecording = () => {
     setTimeLeft(0);
     setIsRecording(false);
   }
+};
+
+const handleAudioUpload = async (e) => {
+  const file = e.target.files[0];
+
+  if (!file) return;
+
+  if (!file.type.startsWith("audio/")) {
+    toast.error("Please upload an audio file");
+    return;
+  }
+
+  try {
+    await sendAudioToBackend(file);
+  } catch (error) {
+    console.error(error);
+    toast.error("Failed to upload audio");
+  }
+
+  // reset input so same file can be selected again
+  e.target.value = "";
 };
 
 useEffect(() => {
@@ -746,6 +772,13 @@ return (
           >
             <div className="relative">
               <input
+                type="file"
+                ref={fileInputRef}
+                accept="audio/*"
+                onChange={handleAudioUpload}
+                className="hidden"
+              />
+              <input
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
@@ -770,7 +803,20 @@ return (
               />
               
               <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
-  
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current.click()}
+                  className="
+                    p-2
+                    rounded-full
+                    bg-slate-700
+                    text-slate-200
+                    hover:bg-slate-600
+                    cursor-pointer
+                  "
+                >
+                  <Paperclip className="h-5 w-5" />
+                </button>
                 <button
                   type="button"
                   onClick={
