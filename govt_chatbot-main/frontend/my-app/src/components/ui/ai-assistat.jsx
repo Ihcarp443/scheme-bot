@@ -32,6 +32,81 @@ const AIMessageBar = () => {
   const [selectedThread, setSelectedThread] =useState(null);
   const[loadPastChat,setloadPastChat]=useState(false)
 
+
+  // const submitFeedback = async (
+  //   msg,
+  //   feedback
+  // ) => {
+  //   try {
+  //     await fetch(
+  //       `${BASE_URL}/feedback`,
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type":
+  //             "application/json",
+  //         },
+  //         body: JSON.stringify({
+  //           thread_id: threadID,
+  //           answer: msg.text,
+  //           feedback,
+  //         }),
+  //       }
+  //     );
+
+  //     toast.success(
+  //       "Feedback submitted"
+  //     );
+
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
+  const submitFeedback = async (
+  msg,
+  feedback
+) => {
+  try {
+
+    if (msg.feedback) {
+      toast.info(
+        "Feedback already submitted"
+      );
+      return;
+    }
+
+    await fetch(
+      `${BASE_URL}/feedback`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type":
+            "application/json",
+        },
+        body: JSON.stringify({
+          thread_id: threadID,
+          answer: msg.text,
+          feedback,
+        }),
+      }
+    );
+
+    setMessages(prev =>
+      prev.map(m =>
+        m === msg
+          ? { ...m, feedback }
+          : m
+      )
+    );
+
+    toast.success(
+      "Feedback submitted"
+    );
+
+  } catch (err) {
+    console.error(err);
+  }
+};
   const resumeInterrupt = async(userInput) => {
 
   try {  
@@ -692,42 +767,50 @@ return (
                       "
                     >
                       <button
+                        onClick={() =>
+                          submitFeedback(msg, "like")
+                        }
                         className="
                           p-1.5
                           rounded-md
                           text-slate-500
-                          hover:text-slate-200
+                          hover:text-green-400
                           hover:bg-slate-800
+                          cursor-pointer
                         "
                       >
-                        <ThumbsUp size={14} />
-                      </button>
-                
-                          <button
-                        className="
-                          p-1.5
-                          rounded-md
-                          text-slate-500
-                          hover:text-slate-200
-                          hover:bg-slate-800
-                        "
-                      >
-                        <ThumbsDown size={14} />
+                        <ThumbsUp
+                              size={14}
+                              className={
+                                msg.feedback === "like"
+                                  ? "text-green-500"
+                                  : ""
+                              }
+                            />
                       </button>
 
-                        <button
-                          onClick={() => speakText(msg.text, msg.lang)}
-                          className="
-                            p-1
-                            rounded-md
-                            text-slate-500
-                            hover:text-slate-200
-                            hover:bg-slate-800
-                            cursor-pointer
-                          "
-                        >
-                          <Volume2 size={18} />
-                        </button>
+                      <button
+                        onClick={() =>
+                          submitFeedback(msg, "dislike")
+                        }
+                        className="
+                          p-1.5
+                          rounded-md
+                          text-slate-500
+                          hover:text-red-400
+                          hover:bg-slate-800
+                          cursor-pointer
+                        "
+                      >
+                        <ThumbsDown
+                          size={14}
+                          className={
+                            msg.feedback === "dislike"
+                              ? "text-red-500"
+                              : ""
+                          }
+                        />
+                      </button>
                       
                     </div>
                     )}

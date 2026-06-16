@@ -8,6 +8,7 @@ from api.grievance import router as grievance_router
 from api.threads import router as threads_router
 from api.dictate_text  import router as dictate_router
 from api.webhook import router as whatsapp_router
+from api.feedback import router as feedback_router
 # from api.upload_audio import router as upload_audio_router
 
 app = FastAPI(
@@ -29,6 +30,11 @@ app.include_router(threads_router, prefix="/threads", tags=["Threads"])
 app.include_router(grievance_router, prefix="/grievance", tags=["Grievance"])
 app.include_router(dictate_router, prefix="/play", tags=["playback"])
 app.include_router(whatsapp_router, prefix="", tags=["whatsapp"])
+app.include_router(
+    feedback_router,
+    prefix="/feedback",
+    tags=["Feedback"]
+)
 init_db()
 
 
