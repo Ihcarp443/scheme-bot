@@ -268,6 +268,18 @@ const AIMessageBar = () => {
           body: JSON.stringify(data),
       }
     );
+    if (!response.ok) {
+      console.log("Status:", response.status); 
+      setIsTyping(false);
+      if (response.status === 400) {
+        const ans="This language is not supported. Try some other!"
+        setMessages((prev) => [...prev, { text: ans, isUser: false ,animate:true ,lang:"en",error:true}]);
+        return;
+      }
+      // toast.error(res.detail || "Can't fetch answer. Try again!");
+      setMessages((prev) => [...prev, { text: "Can't fetch answer right now. Try again!", isUser: false ,animate:true ,lang:"en",error:true}]);
+      return;
+    }
     // console.log("body",body)
     const res = await response.json();
     console.log(res)
@@ -311,6 +323,7 @@ const AIMessageBar = () => {
       }
     }
     else{
+      console.log("Status:",res.status)
       setIsTyping(false)
       if(res.error == "Translation failed"){
         toast.error("This Language is not supported, Try some other languages.")
@@ -318,8 +331,9 @@ const AIMessageBar = () => {
       }
       toast.error("Can't fetch answer Try again!")
     }
-   } catch (error) {
-    console.error(error);
+   } catch(error) {
+    setIsTyping(false)
+    console.log(error);
     toast.error("Something went wrong")
    }
   };
@@ -560,14 +574,7 @@ const sendAudioToBackend = async (audioBlob) => {
   } catch (error) {
     console.error("API call failed:", error);
   }
-  // const speech = new SpeechSynthesisUtterance(text);
 
-  // speech.lang = "hi-IN";
-  // speech.rate = 1;
-  // speech.pitch = 1;
-
-  // window.speechSynthesis.cancel(); // stop previous speech
-  // window.speechSynthesis.speak(speech);
 };
 
 
@@ -668,8 +675,8 @@ return (
         {/* Messages */}
         <div className="flex-1 overflow-y-auto px-4 py-8">
           {loadPastChat ? (
-  <ChatSkeleton />
-) :messages.length === 0 ? (
+              <ChatSkeleton />
+            ) :messages.length === 0 ? (
             <div className="h-full flex items-center justify-center">
               <div className="text-center">
                 <Sparkles className="h-14 w-14 text-indigo-400 mx-auto mb-4" />
@@ -703,6 +710,8 @@ return (
                     ${
                       msg.isUser
                         ? "bg-indigo-600 text-white"
+                        : msg.error
+                        ? "bg-red-900/20 text-red-300 border border-red-800"
                         : "bg-slate-800 text-slate-100 border border-slate-700"
                     }
                   `}

@@ -1,9 +1,15 @@
-from fastapi import APIRouter
+from fastapi import APIRouter,HTTPException
 from pydantic import BaseModel
 import uuid
 import traceback
 from graph.graph_builder import graph
 from db.thread_repository import save_thread
+from services.exceptions import(
+    TranslationError,
+    UnsupportedLanguageError
+)
+
+
 router = APIRouter()
 
 
@@ -16,7 +22,7 @@ class ChatRequest(BaseModel):
 @router.post("/chat")
 async def chat(req: ChatRequest):
     print(req)
-    if req.thread_id == None:
+    if req.thread_id is None:
         thread_id = req.thread_id or str(uuid.uuid4())
         save_thread(
             thread_id,
@@ -62,10 +68,6 @@ async def chat(req: ChatRequest):
                 "interrupt": True,
                 "data": interrupt_data
             }
-        # if result.get("language_probability") < 0.70:
-        #     print("Error: Audio quality too low or language not natively supported.")
-        # else:
-        #     print("Transcription:", result.get("transcript"))
         return {
             "success": True,
             "thread_id": thread_id,
@@ -74,22 +76,26 @@ async def chat(req: ChatRequest):
             "audio": result.get("filename",""),
             "user_lang":result.get("user_lang")
         }
-        
-
+    except UnsupportedLanguageError:
+        raise HTTPException(
+            status_code=400,
+            detail="Language not supported"
+        )
+    except TranslationError as e:
+        raise HTTPException(
+            status_code=500,
+            detail="Unable to process your message. Please try again."
+        )
     except Exception as e:
-        traceback.print_exc()
-        return {
-            "success": True,
-            "thread_id": thread_id,
-            "interrupt": False,
-            "answer": "Language not supported",
-            # "audio": result.get("filename",""),
-            # "user_lang":result.get("user_lang")
-        }
-        
-        # return {
-
-        #     "success": False,
-        #     "thread_id": thread_id,
-        #     "error": str(e)
-        # }
+        raise HTTPException(
+            status_code=500,
+            detail="Something went wrong. Please try again."
+        )
+    # except Exception as e:
+    #     traceback.print_exc()
+    #     return {
+    #         "success": True,
+    #         "thread_id": thread_id,
+    #         "interrupt": False,
+    #         "answer": "Language not supported",
+    #     }

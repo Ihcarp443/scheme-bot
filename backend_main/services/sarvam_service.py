@@ -1,25 +1,61 @@
 from sarvamai import SarvamAI
 from dotenv import load_dotenv
 import os
-import base64
-
+import httpx
+from services.exceptions import(
+    TranslationError,
+    UnsupportedLanguageError
+)
+from sarvamai.errors import UnprocessableEntityError
 load_dotenv()
 
 client = SarvamAI(
     api_subscription_key=os.getenv("SARVAM_API_KEY")
 )
 
+# def translate_to_english(query):
+#     try:
+#         response = client.text.translate(
+#         input=query,
+#         source_language_code="auto",
+#         target_language_code="en-IN",
+#         )
+#         return {'user_lang': response.source_language_code, 'query':response.translated_text}
+#     except:
+#         print("Translation to language failed::")
+#         raise Exception("Translation failed")
+
+
 def translate_to_english(query):
     try:
         response = client.text.translate(
-        input=query,
-        source_language_code="auto",
-        target_language_code="en-IN",
+            input=query,
+            source_language_code="auto",
+            target_language_code="en-IN",
         )
-        return {'user_lang': response.source_language_code, 'query':response.translated_text}
-    except:
-        print("Translation to language failed::")
-        raise Exception("Translation failed")
+
+        return {
+            "user_lang": response.source_language_code,
+            "query": response.translated_text
+        }
+
+    except UnprocessableEntityError as e:
+        if "detect the language" in str(e).lower():
+            raise UnsupportedLanguageError(
+                "Language not supported"
+            ) from e
+        
+        raise TranslationError(
+            "Translation failed"
+        ) from e
+
+    except Exception as e:
+        raise TranslationError(
+            "Translation service failed"
+        ) from e
+    
+
+
 
 
 def chunk_text(text, max_chars=900):

@@ -1,38 +1,77 @@
-from fastapi import Request
+from fastapi import Request, APIRouter
 from fastapi.responses import Response
 from twilio.twiml.messaging_response import MessagingResponse
-from fastapi import APIRouter
 from graph.graph_builder import graph
+from fastapi import BackgroundTasks, Request
 router = APIRouter()
-@router.post("/whatsapp/webhook")
-async def whatsapp_webhook(request: Request):
-    form = await request.form()
-    user_msg = form.get("Body")
-    if not user_msg:
-        user_msg = "Hi"
-    # user_number = form.get("From").replace("whatsapp:", "")
-    thread_id = "103"
+import os
+from twilio.rest import Client
+from dotenv import load_dotenv
+
+
+load_dotenv()
+
+ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID")
+AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN")
+
+client = Client(ACCOUNT_SID, AUTH_TOKEN)
+
+TWILIO_NUMBER = os.getenv("TWILIO_WHATSAPP_NUMBER")
+ 
+
+def process_message(user_msg):
+
     config = {
-    "configurable": {
-        "thread_id": thread_id
+        "configurable": {
+            "thread_id": "10001"
+        }
     }
-}
-    # 1. Call your LangGraph pipeline
+
     state = {
-        "user_id": "0007",
+        "user_id": "20002",
         "input_type": "text",
         "input_text": user_msg,
-        "channel":"whatsapp",
+        "channel": "whatsapp",
         "messages": [],
         "complaint_data": {}
     }
 
-    result = graph.invoke(state, config=config)
+    try:
+        result = graph.invoke(state, config=config)
 
-    bot_reply = result.get("final_answer", "Sorry, I couldn't process that.")
+        answer = result.get(
+            "final_answer",
+            "Sorry, I couldn't process your request."
+        )
 
-    # 2. Twilio response format
-    twilio_resp = MessagingResponse()
-    twilio_resp.message(bot_reply)
+    except Exception as e:
+        print("BACKGROUND ERROR:", e)
 
-    return Response(content=str(twilio_resp), media_type="application/xml")
+        answer = (
+            "❌ Sorry, something went wrong while processing your request. "
+            "Please try again later."
+        )
+    user_number=os.getenv("USER_WHATSAPP_NUMBER")
+    client.messages.create(
+        from_=TWILIO_NUMBER,
+        to=user_number,
+        body=answer
+    )
+@router.post("/whatsapp/webhook")
+async def webhook(
+    request: Request,
+    background_tasks: BackgroundTasks
+):
+
+    form = await request.form()
+
+    user_msg = form.get("Body") or "Hi"
+
+    print("Received WhatsApp message:", user_msg)
+
+    background_tasks.add_task(
+        process_message,
+        user_msg,
+    )
+
+    return {"status": "received"}
