@@ -11,9 +11,7 @@ from db.checkpoint import checkpoint_conn
 from graph.state import GraphState
 
 from graph.nodes.intent import (
-    # agent_node,
     grievance_entry_node,
-    # route_from_agent
 )
 
 from graph.nodes.retrieve import (
@@ -155,11 +153,6 @@ builder.add_edge(
     "text_input"
 )
 
-# builder.add_edge(
-#     "text_input",
-#     "agent"
-# )
-
 builder.add_edge(
     "text_input",
     "fetch_memory"
@@ -169,17 +162,6 @@ builder.add_edge(
     "fetch_memory",
     "tool_agent"
 )
-
-# builder.add_conditional_edges(
-#     "agent",
-#     route_from_agent,
-#     {
-#         "rag": "filter",
-#         "grievance": "grievance",
-#         "general": "general"
-#     }
-# )
-
 
 builder.add_conditional_edges(
     "tool_agent",

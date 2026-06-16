@@ -7,6 +7,10 @@ router = APIRouter()
 import os
 from twilio.rest import Client
 from dotenv import load_dotenv
+from services.exceptions import(
+    TranslationError,
+    UnsupportedLanguageError
+)
 
 
 load_dotenv()
@@ -19,16 +23,56 @@ client = Client(ACCOUNT_SID, AUTH_TOKEN)
 TWILIO_NUMBER = os.getenv("TWILIO_WHATSAPP_NUMBER")
  
 
-def process_message(user_msg):
+# def process_message(user_msg):
 
+#     config = {
+#         "configurable": {
+#             "thread_id": "10001"
+#         }
+#     }
+
+#     state = {
+#         "user_id": "20002",
+#         "input_type": "text",
+#         "input_text": user_msg,
+#         "channel": "whatsapp",
+#         "messages": [],
+#         "complaint_data": {}
+#     }
+
+#     try:
+#         result = graph.invoke(state, config=config)
+
+#         answer = result.get(
+#             "final_answer",
+#             "Sorry, I couldn't process your request."
+#         )
+
+#     except Exception as e:
+#         print("BACKGROUND ERROR:", e)
+
+#         answer = (
+#             "❌ Sorry, something went wrong while processing your request. "
+#             "Please try again later."
+#         )
+#     user_number=os.getenv("USER_WHATSAPP_NUMBER")
+#     client.messages.create(
+#         from_=TWILIO_NUMBER,
+#         to=user_number,
+#         body=answer
+#     )
+
+
+def process_message(user_msg):
+    thread_id="20004"
     config = {
         "configurable": {
-            "thread_id": "10001"
+            "thread_id": thread_id
         }
     }
 
     state = {
-        "user_id": "20002",
+        "user_id": "10004",
         "input_type": "text",
         "input_text": user_msg,
         "channel": "whatsapp",
@@ -37,26 +81,58 @@ def process_message(user_msg):
     }
 
     try:
-        result = graph.invoke(state, config=config)
+        result = graph.invoke(
+            state,
+            config=config
+        )
 
-        answer = result.get(
-            "final_answer",
-            "Sorry, I couldn't process your request."
+        # Handle interrupts if your graph returns them
+        if "__interrupt__" in result:
+            # answer = (
+            #     "Your request needs additional information. "
+            #     "Please provide the required details."
+            # )
+            print("Interrupt:",result)
+            answer= result["__interrupt__"][0].value
+            
+       
+            
+        else:
+            answer = result.get(
+                "final_answer",
+                "Sorry, I couldn't process your request."
+            )
+
+    except (
+        TranslationError,
+        UnsupportedLanguageError
+    ) as e:
+        print("Translation Error:", e)
+
+        answer = (
+            "Sorry, your language is currently not supported."
         )
 
     except Exception as e:
-        print("BACKGROUND ERROR:", e)
-
+        print("BACKGROUND ERROR")
         answer = (
-            "❌ Sorry, something went wrong while processing your request. "
-            "Please try again later."
+            "❌ Sorry, something went wrong. Please try again later."
         )
+
+    # Send the final answer to WhatsApp
     user_number=os.getenv("USER_WHATSAPP_NUMBER")
-    client.messages.create(
-        from_=TWILIO_NUMBER,
-        to=user_number,
-        body=answer
-    )
+    try:
+        message = client.messages.create(
+            from_=TWILIO_NUMBER,
+            to=user_number,
+            body=answer
+        )
+
+        print("WhatsApp message sent:", message.sid)
+
+    except Exception:
+        print("TWILIO SEND ERROR")
+
 @router.post("/whatsapp/webhook")
 async def webhook(
     request: Request,
