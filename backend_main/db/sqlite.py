@@ -1,19 +1,34 @@
 import sqlite3
 
-conn = sqlite3.connect(
-    "sessions/langgraph.db",
-    check_same_thread=False
-)
-def create_threads_table(conn):
+
+
+def init_db():
+    conn = get_db_connection()
+
     conn.execute("""
-        CREATE TABLE IF NOT EXISTS threads (
+        CREATE TABLE IF NOT EXISTS threads(
             thread_id TEXT PRIMARY KEY,
             title TEXT NOT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)
 
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS memories(
+            user_id TEXT,
+            key TEXT,
+            value TEXT,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY(user_id, key)
+        )
+    """)
+
     conn.commit()
-create_threads_table(conn)
+    conn.close()
+
+
 def get_db_connection():
-    return conn
+    return sqlite3.connect(
+        "sessions/app.db",
+        check_same_thread=False
+    )

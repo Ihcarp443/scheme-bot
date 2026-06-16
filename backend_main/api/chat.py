@@ -11,7 +11,7 @@ class ChatRequest(BaseModel):
     message: str
     thread_id: str | None = None
     input_type: str
-
+    user_id:str
 
 @router.post("/chat")
 async def chat(req: ChatRequest):
@@ -24,7 +24,9 @@ async def chat(req: ChatRequest):
         )
     else:
         thread_id = req.thread_id
-
+    
+    user_id=req.user_id
+    print("user_id",user_id)
     config = {
         "configurable": {
             "thread_id": thread_id
@@ -32,6 +34,7 @@ async def chat(req: ChatRequest):
     }
     state = {
         # "input_type": "text",
+        "user_id":user_id,
         "input_type": req.input_type,
         "input_text": req.message,
         "messages": [],

@@ -6,7 +6,8 @@ from langgraph.graph import (
 
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.checkpoint.sqlite import SqliteSaver
-from db.sqlite import get_db_connection
+
+from db.checkpoint import checkpoint_conn
 from graph.state import GraphState
 
 from graph.nodes.intent import (
@@ -49,11 +50,17 @@ from graph.nodes.router_nodes import (
     route_selected_tool
 )
 
+from graph.nodes.fetch_memory import(
+    memory_fetch_node
+)
+
+from graph.nodes.update_memory import(
+    memory_update_node
+)
 # checkpointer = MemorySaver()
-conn = get_db_connection()
 
 # checkpointer = SqliteSaver(conn)
-checkpointer = SqliteSaver(conn=conn)
+checkpointer = SqliteSaver(conn=checkpoint_conn)
 
 builder = StateGraph(GraphState)
 
@@ -71,10 +78,10 @@ builder.add_node(
     "tool_agent",
     tool_agent
 )
-# builder.add_node(
-#     "agent",
-#     agent_node
-# )
+builder.add_node(
+    "fetch_memory",
+    memory_fetch_node
+)
 
 builder.add_node(
     "grievance_entry",
@@ -133,6 +140,11 @@ builder.add_node(
     dictate_answer_node
 )
 
+builder.add_node(
+    "update_memory",
+    memory_update_node
+)
+
 
 # =========================
 # Flow
@@ -147,8 +159,14 @@ builder.add_edge(
 #     "text_input",
 #     "agent"
 # )
+
 builder.add_edge(
     "text_input",
+    "fetch_memory"
+)
+
+builder.add_edge(
+    "fetch_memory",
     "tool_agent"
 )
 
@@ -193,7 +211,7 @@ builder.add_edge(
 
 builder.add_edge(
     "answer",
-    "translate"
+    "update_memory"
 )
 
 # =========================
@@ -215,7 +233,7 @@ builder.add_edge(
 
 builder.add_edge(
     "grievance_formatter",
-    "translate"
+    "update_memory"
 )
 
 # =========================
@@ -227,8 +245,9 @@ builder.add_edge(
     "general"
 )
 
-builder.add_edge("general", "translate")
+builder.add_edge("general", "update_memory")
 
+builder.add_edge("update_memory", "translate")
 # =========================
 # End
 # =========================

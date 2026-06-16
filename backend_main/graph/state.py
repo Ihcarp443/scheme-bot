@@ -8,8 +8,12 @@ class ChatMessage(TypedDict):
     lang: str
 
 class GraphState(TypedDict, total=False):
+    user_id: str
+    memory: dict
+    
     input_text: str
     input_type: str
+    expanded_query:str
 
     user_lang: str
     query_en: str

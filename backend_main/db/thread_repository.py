@@ -37,6 +37,7 @@ def save_thread(
     )
 
     conn.commit()
+    conn.close()
 
 
 def get_all_threads():
@@ -54,7 +55,7 @@ def get_all_threads():
     )
 
     rows = cursor.fetchall()
-
+    conn.close()
     return [
         {
             "thread_id": row[0],
@@ -64,6 +65,7 @@ def get_all_threads():
         for row in rows
     ]
 
+    
 
 def get_thread(
     thread_id: str
@@ -84,9 +86,10 @@ def get_thread(
 
     row = cursor.fetchone()
 
+    conn.close()
     if not row:
         return None
-
+    
     return {
         "thread_id": row[0],
         "title": row[1],
@@ -108,3 +111,4 @@ def delete_thread(
     )
 
     conn.commit()
+    conn.close()

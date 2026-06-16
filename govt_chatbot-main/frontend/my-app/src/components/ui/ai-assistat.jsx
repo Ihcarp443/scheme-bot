@@ -40,15 +40,8 @@ const AIMessageBar = () => {
     console.log("userInturrp",userInput)
     if(isNaN(userInput)){
       setIsTyping(false);
-      // const mess="You must enter APPLICATION ID only, An application ID is just a number for eg: if 3253234"
       toast.warning("Applicatio ID should be Number.")
-      // setMessages(prev => [
-      //   ...prev,{
-      //     text: mess,
-      //     isUser: false,
-      //     error:true
-      //   }
-      // ]);
+
       return
     }
     const payload = {
@@ -178,12 +171,15 @@ const AIMessageBar = () => {
   const sendTextToBackend = async(userMessage,input_t) =>{
       setIsTyping(true);
       // console.log(userMessage)
+    //  const id=localStorage.getItem("user_id") || "user01"
+     const id="0005"
     try 
     {
       const data = {
                   message: userMessage,
                   thread_id: threadID|| null,
-                  input_type:input_t
+                  input_type:input_t,
+                  user_id:id
                 };
       // console.log("data",data)
 
@@ -760,11 +756,7 @@ return (
               {/* {CHAT BAR MODULE} */}
 
         <div
-          className={`border-t ${
-            isFocused
-              ? "border-indigo-500/50"
-              : "border-slate-800"
-          } bg-slate-950 p-4 transition-colors`}
+          className="bg-slate-950 p-4 "
         >
           <form
             onSubmit={handleSubmit}
@@ -778,6 +770,7 @@ return (
                 onChange={handleAudioUpload}
                 className="hidden"
               />
+              
               <input
                 type="text"
                 value={input}
@@ -800,6 +793,10 @@ return (
                   focus:ring-2
                   focus:ring-indigo-500
                 "
+                onInput={(e) => {
+                  e.currentTarget.style.height = "auto";
+                  e.currentTarget.style.height = e.currentTarget.scrollHeight + "px";
+                }}
               />
               
               <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">

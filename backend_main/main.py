@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from db.sqlite import init_db
 from api.chat import router as chat_router
 from api.audio import router as audio_router
 from api.grievance import router as grievance_router
@@ -26,7 +27,7 @@ app.include_router(audio_router, prefix="/audio", tags=["Audio"])
 app.include_router(threads_router, prefix="/threads", tags=["Threads"])
 app.include_router(grievance_router, prefix="/grievance", tags=["Grievance"])
 app.include_router(dictate_router, prefix="/play", tags=["playback"])
-
+init_db()
 
 
 @app.get("/")

@@ -18,19 +18,57 @@ def translate_to_english(query):
         )
         return {'user_lang': response.source_language_code, 'query':response.translated_text}
     except:
-        print("Translation to language failde::")
+        print("Translation to language failed::")
         raise Exception("Translation failed")
 
+
+def chunk_text(text, max_chars=900):
+    chunks = []
+    start = 0
+
+    while start < len(text):
+        end = start + max_chars
+        chunks.append(text[start:end])
+        start = end
+
+    return chunks 
+
+# def translate_to_user_language(response, user_lang):
     
+#     llmresponse = client.text.translate(
+#          input=response,
+#          source_language_code="auto",
+#          target_language_code=user_lang,
+#     )
+#     return llmresponse.translated_text
 
 def translate_to_user_language(response, user_lang):
-    
-    llmresponse = client.text.translate(
-         input=response,
-         source_language_code="auto",
-         target_language_code=user_lang,
-    )
-    return llmresponse.translated_text
+    if not response:
+        return response
+
+    # If small enough → direct translate
+    if len(response) <= 1000:
+        llmresponse = client.text.translate(
+            input=response,
+            source_language_code="auto",
+            target_language_code=user_lang,
+        )
+        return llmresponse.translated_text
+
+    # Otherwise split + translate
+    chunks = chunk_text(response, 900)
+
+    translated_parts = []
+
+    for chunk in chunks:
+        llmresponse = client.text.translate(
+            input=chunk,
+            source_language_code="auto",
+            target_language_code=user_lang,
+        )
+        translated_parts.append(llmresponse.translated_text)
+
+    return " ".join(translated_parts)
 
 def speech_to_text(filepath):
     try:
