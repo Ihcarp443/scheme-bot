@@ -172,7 +172,7 @@ const AIMessageBar = () => {
       setIsTyping(true);
       // console.log(userMessage)
     //  const id=localStorage.getItem("user_id") || "user01"
-     const id="0005"
+     const id="0011"
     try 
     {
       const data = {

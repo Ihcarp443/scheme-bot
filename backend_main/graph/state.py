@@ -14,6 +14,7 @@ class GraphState(TypedDict, total=False):
     input_text: str
     input_type: str
     expanded_query:str
+    channel:str
 
     user_lang: str
     query_en: str

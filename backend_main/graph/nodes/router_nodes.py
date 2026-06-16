@@ -25,8 +25,7 @@ def rag_router():
 @tool
 def grievance_router():
     """
-    Select this capability when the user has already submitted a 
-    government scheme application and is facing an issue.
+    Select this capability when the user is facing an issue related to any scheme or payment for schemes.
 
     Use for:
     - Payment not received

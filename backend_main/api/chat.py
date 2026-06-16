@@ -37,6 +37,7 @@ async def chat(req: ChatRequest):
         "user_id":user_id,
         "input_type": req.input_type,
         "input_text": req.message,
+        "channel":"website",
         "messages": [],
         "complaint_data": {}
     }
