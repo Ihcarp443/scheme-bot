@@ -45,7 +45,8 @@ async def chat(req: ChatRequest):
         "input_text": req.message,
         "channel":"website",
         "messages": [],
-        "complaint_data": {}
+        "complaint_data": {},
+        "suggested_ques":[]
     }
 
     try:
@@ -74,19 +75,23 @@ async def chat(req: ChatRequest):
             "interrupt": False,
             "answer": result.get("final_answer", ""),
             "audio": result.get("filename",""),
-            "user_lang":result.get("user_lang")
+            "user_lang":result.get("user_lang"),
+            "suggested_ques":result.get("suggested_ques")
         }
     except UnsupportedLanguageError:
+        traceback.print_exc()
         raise HTTPException(
             status_code=400,
             detail="Language not supported"
         )
     except TranslationError as e:
+        traceback.print_exc()
         raise HTTPException(
             status_code=500,
             detail="Unable to process your message. Please try again."
         )
     except Exception as e:
+        traceback.print_exc()
         raise HTTPException(
             status_code=500,
             detail="Something went wrong. Please try again."

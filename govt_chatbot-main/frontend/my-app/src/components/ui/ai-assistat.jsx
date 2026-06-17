@@ -32,7 +32,6 @@ const AIMessageBar = () => {
   const [selectedThread, setSelectedThread] =useState(null);
   const[loadPastChat,setloadPastChat]=useState(false)
 
-
   // const submitFeedback = async (
   //   msg,
   //   feedback
@@ -238,16 +237,12 @@ const AIMessageBar = () => {
     loadThreads();
   }, []);
 
-
-
-
-
   
   const sendTextToBackend = async(userMessage,input_t) =>{
       setIsTyping(true);
       // console.log(userMessage)
     //  const id=localStorage.getItem("user_id") || "user01"
-     const id="0011"
+     const id="00123"
     try 
     {
       const data = {
@@ -306,6 +301,7 @@ const AIMessageBar = () => {
             isUser: false,
             animate:true,
             lang:q.user_lang,
+            showSuggestions: false 
           }))
         ]);
 
@@ -315,7 +311,17 @@ const AIMessageBar = () => {
       setIsTyping(false)
       const fin=res.answer
       const user_lang=res.user_lang
-      setMessages((prev) => [...prev, { text: fin, isUser: false ,animate:true ,lang:user_lang}]);
+      const s_ques=res.suggested_ques
+
+      setMessages((prev) => [...prev, 
+        { 
+          text: fin,
+          isUser: false,
+          animate:true,
+          lang:user_lang,
+          ques:s_ques
+        }]);
+
       if (input_t === "audio" && res.audio) {
         const audio = new Audio(`data:audio/wav;base64,${res.audio}`);
         audio.play();
@@ -577,7 +583,26 @@ const sendAudioToBackend = async (audioBlob) => {
 
 };
 
+const handleShowSuggestions = (index) => {
+  setMessages((prev) =>
+    prev.map((m, i) =>
+      i === index
+        ? { ...m, showSuggestions: true }
+        : m
+    )
+  );
+};
 
+const handleSuggestedClick = (question) => {
+  // setInputValue(question);
+  const userMessage = question;
+  setMessages((prev) => [...prev, { text: userMessage, isUser: true }]);
+  setInput("");
+  // optional small delay so UI updates first
+  setTimeout(() => {
+    sendTextToBackend(question,"text"); 
+  }, 100);
+};
 
 return (
   <>
@@ -660,11 +685,6 @@ return (
                          <Trash size={20} />
                   </button>
               </div>
-
-              
-              
-            
-             
             </div>
           ))
         )}
@@ -697,8 +717,7 @@ return (
               key={index}
               className={`flex ${
                 msg.isUser ? "justify-end" : "justify-start"
-              }`}
-            >
+              }`}>
                 <div className="group max-w-[75%]">
     
                 <div
@@ -738,28 +757,57 @@ return (
                   `}
               >
                 {msg.isUser ? (
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                      {msg.text}
-                    </ReactMarkdown       >
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  {msg.text}
+                </ReactMarkdown>
+              ) : msg.animate ? (
+                /* 🤖 AI MESSAGE → typing effect */
+               <div>
+    <TextType
+      text={msg.text}
+      typingSpeed={30}
+      showCursor={true}
+      cursorCharacter="|"
+      onComplete={() => handleShowSuggestions(index)}
+      variableSpeed={{ min: 10, max: 25 }}
+    />
 
-                  ) : msg.animate ? (
-                    /* 🤖 AI MESSAGE → typing effect */
-                    <TextType
-                      text={msg?.text || ""}
-                      typingSpeed={30}
-                      // pauseDuration={50}
-                      showCursor={true}
-                      cursorCharacter="|"
-                      variableSpeed={{
-                        min: 10,
-                        max: 25
-                      }}
-                    />
-                  ):(
-                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                    {msg.text}
-                  </ReactMarkdown>
-                )}
+    {!msg.isUser && msg.showSuggestions && msg.ques?.length > 0 && (
+      <div className="mt-3">
+        <div className="text-lg text-slate-400 mb-2">
+          Suggestion:
+        </div>
+
+        <div className="flex flex-col gap-2">
+          {msg.ques.map((q, idx) => (
+            <button
+              key={idx}
+              onClick={() => handleSuggestedClick(q)}
+              className="
+                text-left
+                text-indigo-300
+                underline
+                decoration-1
+                hover:text-indigo-200
+                transition
+                flex items-start gap-2
+                cursor-pointer
+              "
+            >
+              <span>›</span>
+              <span>{q}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    )}
+  </div>
+
+        ) : (
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            {msg.text}
+          </ReactMarkdown>
+        )}
               </div>
             </div>
               {/* Feedback Buttons */}
@@ -820,7 +868,20 @@ return (
                           }
                         />
                       </button>
-                      
+                      <button
+                          onClick={() => speakText(msg.text,msg.lang)}
+                          className="
+                          p-1.5
+                          rounded-md
+                          text-slate-500
+                          hover:bg-slate-800
+                          cursor-pointer
+                        "
+                          title="Speak"
+                        >
+                          <Volume2
+                          size={18}/>
+                        </button>
                     </div>
                     )}
 

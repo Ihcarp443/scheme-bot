@@ -1,6 +1,5 @@
 from services.llm_service import model
-
-
+import json
 def answer_node(state):
 
     context = "\n\n".join(
@@ -46,6 +45,12 @@ def answer_node(state):
     Current Question:
     {question}
 
+    ---------------------
+    Suggested questions should help the user:
+    - explore eligibility
+    - understand benefits
+    - find related schemes
+    - or ask "what next steps"
 
     ---------------------
     Instructions:
@@ -57,7 +62,25 @@ def answer_node(state):
       "I don’t know based on the available data."
     - Keep the answer clear, accurate, and concise.
 
+    ----------------------
+    RULES:
+    - suggested_questions MUST be 2 to 3 items
+    - questions must be short and related to user query
+    - no extra text outside JSON
+    - no markdown
 
+    FINAL OUTPUT FORMAT (STRICT JSON ONLY):
+
+    Return ONLY valid JSON in this format:
+
+    {{
+      "answer": "final user answer here",
+      "suggested_questions": [
+        "question 1",
+        "question 2",
+        "question 3"
+      ]
+    }}
     Answer:
     """
 
@@ -138,48 +161,22 @@ def answer_node(state):
         prompt = wp_prompt
     else:
         prompt = web_prompt
+
     response = model.invoke(prompt)
-
-    return {
+    if channel == "website":
+        raw_output = response.content.strip()
+        print("RAW-CHAT:",raw_output)
+        data = json.loads(raw_output)
+        print("JSON-DATA:",data)
+        return{
+            "answer_en": data["answer"].strip(),
+            "suggested_ques": data.get("suggested_questions", [])
+        }
+    else:
+        return{
         "answer_en": response.content.strip()
-    }
-
-    # prompt = f"""
-    #     You are a helpful AI assistant.
-        
-        
-        
-    #     Use the following conversation history and retrieved context to answer the user's question accurately.
-        
-        
-        
-    #     ---------------------
-    #     Conversation History:
-    #     {history}
-        
-        
-        
-    #     ---------------------
-    #     Retrieved Context:
-    #     {context}
-        
-        
-        
-    #     ---------------------
-    #     Current Question:
-    #     {question}
-        
-        
-        
-    #     ---------------------
-    #     Instructions:
-    #     - Use retrieved context as primary source of truth
-    #     - Use chat history for continuity
-    #     - If answer is not in context, say "I don’t know based on available data"
-    #     - Keep answer clear and concise
-        
-        
-        
-    #     Answer:
-    #     """
-
+        }
+    # return {
+    #     "answer_en": response.content.strip()
+    # }
+    

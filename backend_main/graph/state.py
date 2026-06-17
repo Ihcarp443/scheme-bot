@@ -36,3 +36,4 @@ class GraphState(TypedDict, total=False):
     messages: Annotated[List[BaseMessage], add_messages]
 
     chat_history: List[ChatMessage]
+    suggested_ques: List[str]

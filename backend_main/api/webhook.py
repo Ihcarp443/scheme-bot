@@ -64,7 +64,7 @@ TWILIO_NUMBER = os.getenv("TWILIO_WHATSAPP_NUMBER")
 
 
 def process_message(user_msg):
-    thread_id="20004"
+    thread_id="20005"
     config = {
         "configurable": {
             "thread_id": thread_id
@@ -72,12 +72,13 @@ def process_message(user_msg):
     }
 
     state = {
-        "user_id": "10004",
+        "user_id": "10005",
         "input_type": "text",
         "input_text": user_msg,
         "channel": "whatsapp",
         "messages": [],
-        "complaint_data": {}
+        "complaint_data": {},
+        "suggested_ques":[]
     }
 
     try:
@@ -109,12 +110,16 @@ def process_message(user_msg):
     ) as e:
         print("Translation Error:", e)
 
+        # answer = (
+        #     "Sorry, your language is currently not supported."
+        # )
         answer = (
-            "Sorry, your language is currently not supported."
+            "Sorry,something wrong on our end."
         )
 
     except Exception as e:
         print("BACKGROUND ERROR")
+        print("Error:",e)
         answer = (
             "❌ Sorry, something went wrong. Please try again later."
         )
