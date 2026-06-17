@@ -1,7 +1,7 @@
 from sarvamai import SarvamAI
 from dotenv import load_dotenv
 import os
-import httpx
+
 from services.exceptions import(
     TranslationError,
     UnsupportedLanguageError
@@ -9,7 +9,7 @@ from services.exceptions import(
 from sarvamai.errors import UnprocessableEntityError
 
 load_dotenv()
-
+print("API KEY:", os.getenv("SARVAM_API_KEY"))
 client = SarvamAI(
     api_subscription_key=os.getenv("SARVAM_API_KEY")
 )

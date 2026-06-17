@@ -241,8 +241,8 @@ const AIMessageBar = () => {
   const sendTextToBackend = async(userMessage,input_t) =>{
       setIsTyping(true);
       // console.log(userMessage)
-    //  const id=localStorage.getItem("user_id") || "user01"
-     const id="00123"
+     const id=localStorage.getItem("user_id") || "user01"
+    //  const id="00123"
     try 
     {
       const data = {

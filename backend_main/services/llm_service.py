@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
-
+print("HF TOKEN:", os.getenv("HF_TOKEN"))
 llm = HuggingFaceEndpoint(
     repo_id="google/gemma-4-31B-it",
     huggingfacehub_api_token=os.getenv("HF_TOKEN"),

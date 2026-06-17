@@ -9,6 +9,7 @@ def init_db():
     conn.execute("""
         CREATE TABLE IF NOT EXISTS threads(
             thread_id TEXT PRIMARY KEY,
+            user_id TEXT NOT NULL,
             title TEXT NOT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
@@ -32,6 +33,15 @@ def init_db():
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)
+
+    conn.execute("""
+    CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        phone TEXT UNIQUE NOT NULL,
+        password TEXT NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
     conn.commit()
     conn.close()
 
@@ -41,13 +51,3 @@ def get_db_connection():
         "sessions/app.db",
         check_same_thread=False
     )
-    # );
-    conn.commit()
-    conn.close()
-
-
-# def get_db_connection():
-#     return sqlite3.connect(
-#         "sessions/app.db",
-#         check_same_thread=False
-#     )

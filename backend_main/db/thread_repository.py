@@ -7,6 +7,7 @@ def create_threads_table():
     conn.execute("""
         CREATE TABLE IF NOT EXISTS threads (
             thread_id TEXT PRIMARY KEY,
+            user_id TEXT NOT NULL,
             title TEXT NOT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
@@ -17,6 +18,7 @@ def create_threads_table():
 
 def save_thread(
     thread_id: str,
+    user_id :str,
     title: str
 ):
     
@@ -26,21 +28,19 @@ def save_thread(
         """
         INSERT OR REPLACE INTO threads (
             thread_id,
+            user_id,
             title
         )
-        VALUES (?, ?)
+        VALUES (?, ?, ?)
         """,
-        (
-            thread_id,
-            title
-        )
+        (thread_id, user_id, title)
     )
 
     conn.commit()
     conn.close()
 
 
-def get_all_threads():
+def get_all_threads(user_id :str):
     conn = get_db_connection()
 
     cursor = conn.execute(
@@ -50,12 +50,15 @@ def get_all_threads():
             title,
             created_at
         FROM threads
+        WHERE user_id = ?
         ORDER BY created_at DESC
-        """
+        """,
+        (user_id,)
     )
 
     rows = cursor.fetchall()
     conn.close()
+
     return [
         {
             "thread_id": row[0],
@@ -64,12 +67,10 @@ def get_all_threads():
         }
         for row in rows
     ]
-
     
 
-def get_thread(
-    thread_id: str
-):
+def get_thread(thread_id: str, user_id: str):
+
     conn = get_db_connection()
 
     cursor = conn.execute(
@@ -79,35 +80,32 @@ def get_thread(
             title,
             created_at
         FROM threads
-        WHERE thread_id = ?
+        WHERE thread_id = ? AND user_id = ?
         """,
-        (thread_id,)
+        (thread_id, user_id)
     )
 
     row = cursor.fetchone()
-
     conn.close()
+
     if not row:
         return None
-    
+
     return {
         "thread_id": row[0],
         "title": row[1],
         "created_at": row[2]
     }
+def delete_thread(thread_id: str, user_id: str):
 
-
-def delete_thread(
-    thread_id: str
-):
     conn = get_db_connection()
 
     conn.execute(
         """
         DELETE FROM threads
-        WHERE thread_id = ?
+        WHERE thread_id = ? AND user_id = ?
         """,
-        (thread_id,)
+        (thread_id, user_id)
     )
 
     conn.commit()
