@@ -6,19 +6,15 @@ from graph.graph_builder import graph
 router = APIRouter()
 
 
-@router.get("/")
-async def list_threads():
-
+@router.get("/thread/{user_id}")
+async def list_threads(user_id:str):
     return {
         "success": True,
-        "threads": get_all_threads()
+        "threads": get_all_threads(user_id)
     }
 
 @router.get("/{thread_id}")
-async def get_thread_messages(
-    thread_id: str
-):
-
+async def get_thread_messages(thread_id: str):
     config = {
         "configurable": {
             "thread_id": thread_id

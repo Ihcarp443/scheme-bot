@@ -26,7 +26,9 @@ async def chat(req: ChatRequest):
         thread_id = req.thread_id or str(uuid.uuid4())
         save_thread(
             thread_id,
-            title=req.message[:50]
+            user_id=req.user_id,
+            title=req.message[:50],
+            
         )
     else:
         thread_id = req.thread_id

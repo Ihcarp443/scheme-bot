@@ -5,6 +5,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { ChatSkeleton } from "./ChatSkelton";
 import TextType from "./TextType";
+import { Component } from "./profileDropdown";
 import {
   ThumbsUp,
   ThumbsDown,
@@ -31,6 +32,7 @@ const AIMessageBar = () => {
   const [interruptData, setInterruptData] = useState(null);
   const [selectedThread, setSelectedThread] =useState(null);
   const[loadPastChat,setloadPastChat]=useState(false)
+  const[user_id,setuserId]=useState("")
 
   // const submitFeedback = async (
   //   msg,
@@ -174,11 +176,10 @@ const AIMessageBar = () => {
     console.error(err);
   }
 };
-  const loadThreads = async () => {
+
+  const loadThreads = async (id) => {
     try {
-      const response = await fetch(
-        `${BASE_URL}/threads/`
-      );
+      const response = await fetch(`${BASE_URL}/threads/thread/${id}`);
 
       const res = await response.json();
 
@@ -234,14 +235,22 @@ const AIMessageBar = () => {
 
   
   useEffect(() =>{
-    loadThreads();
+    const id=localStorage.getItem("user_id") || "user01"
+    if (id){
+      setuserId(id)
+
+      loadThreads(id);
+    }
+    
+    
   }, []);
 
   
   const sendTextToBackend = async(userMessage,input_t) =>{
       setIsTyping(true);
       // console.log(userMessage)
-     const id=localStorage.getItem("user_id") || "user01"
+    //  const id=localStorage.getItem("user_id") || "user01"
+    
     //  const id="00123"
     try 
     {
@@ -249,7 +258,7 @@ const AIMessageBar = () => {
                   message: userMessage,
                   thread_id: threadID|| null,
                   input_type:input_t,
-                  user_id:id
+                  user_id:user_id
                 };
       // console.log("data",data)
 
@@ -284,7 +293,7 @@ const AIMessageBar = () => {
       {
         set_threadID(res.thread_id);
       }
-      await loadThreads();
+      await loadThreads(user_id);
   
       console.log("Backend Response:", res);
 
@@ -319,7 +328,7 @@ const AIMessageBar = () => {
           isUser: false,
           animate:true,
           lang:user_lang,
-          ques:s_ques
+          ques:s_ques || []
         }]);
 
       if (input_t === "audio" && res.audio) {
@@ -623,7 +632,7 @@ return (
     <h2 className="text-white text-2xl font-semibold">
       Chat History
     </h2>
-
+    <div className=" flex items-center justify-center gap-4">
     <button
       onClick={clearChat}
       className="
@@ -643,6 +652,8 @@ return (
         New Chat
       </span>
     </button>
+    <Component user_id={user_id}/>
+    </div>
   </div>
 </div>
         {/* PAST CHATS */}

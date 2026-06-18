@@ -5,6 +5,8 @@ import { cn } from "@/lib/utils";
 import RotatingText from './RotatingText'
 import MotionButton from "./motion-button";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import LoginDrawer from "@/components/loginDrawer/LoginDrawer"
 function createBeam(width, height) {
     const angle = -35 + Math.random() * 10;
     return {
@@ -25,11 +27,12 @@ export function BeamsBackground({
     className,
     intensity = "strong"
 }) {
+
     const canvasRef = useRef(null);
     const beamsRef = useRef([]);
     const animationFrameRef = useRef(0);
     const MINIMUM_BEAMS = 20;
-
+    const[isOpen,setIsOpen]=useState(false)
     const opacityMap = {
         subtle: 0.7,
         medium: 0.85,
@@ -164,35 +167,35 @@ export function BeamsBackground({
                 <div
                     className="flex flex-col items-center justify-center gap-6 px-4 text-center">
                     <motion.h1
-  className="text-6xl md:text-7xl lg:text-8xl font-semibold text-white tracking-tighter"
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.8 }}
->
-  Your one stop Platform for
+                      className="text-6xl md:text-7xl lg:text-8xl font-semibold text-white tracking-tighter"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.8 }}>
+                    
+                      Your one stop Platform for
 
-  <div className="mt-4 flex items-center justify-center gap-4">
-    <span>Government</span>
+                      <div className="mt-4 flex items-center justify-center gap-4">
+                        <span>Government</span>
 
-    <RotatingText
-      texts={["Schemes", "Benefits", "Subsidies", "Grievances" , "Yojanas"]}
-      mainClassName="inline-flex bg-cyan-300 ml-2 text-neutral-950 text-6xl px-5 py-1 rounded-lg [letter-spacing:0.015em]"
-      staggerFrom="last"
-      initial={{ y: "100%" }}
-      animate={{ y: 0 }}
-      exit={{ y: "-120%" }}
-      staggerDuration={0.07}
-      splitLevelClassName="overflow-hidden px-[0.05em] py-[0.06em]"
-      transition={{ type: "spring", damping: 30, stiffness: 400 }}
-      rotationInterval={3000}
-      splitBy="characters"
-      auto
-      loop
-    />
+                        <RotatingText
+                          texts={["Schemes", "Benefits", "Subsidies", "Grievances" , "Yojanas"]}
+                          mainClassName="inline-flex bg-cyan-300 ml-2 text-neutral-950 text-6xl px-5 py-1 rounded-lg [letter-spacing:0.015em]"
+                          staggerFrom="last"
+                          initial={{ y: "100%" }}
+                          animate={{ y: 0 }}
+                          exit={{ y: "-120%" }}
+                          staggerDuration={0.07}
+                          splitLevelClassName="overflow-hidden px-[0.05em] py-[0.06em]"
+                          transition={{ type: "spring", damping: 30, stiffness: 400 }}
+                          rotationInterval={3000}
+                          splitBy="characters"
+                          auto
+                          loop
+                        />
 
-  </div>
-</motion.h1>
-                       
+                      </div>
+                    </motion.h1>
+
                     <motion.p
                         className="text-lg md:text-xl lg:text-2xl text-white/70 tracking-tight w-220"
                         initial={{ opacity: 0, y: 20 }}
@@ -201,10 +204,12 @@ export function BeamsBackground({
                         Get instant answers about government schemes, check eligibility, discover benefits, and track or raise grievances—all in one place.
                     </motion.p>
                      <div className="flex items-center justify-center ">
-                      <MotionButton onClick={() => router.push("/chat")} label="Chat Now" />
+                      {/* <MotionButton onClick={() => router.push("/chat")} label="Chat Now" /> */}
+                      <MotionButton onClick={() => setIsOpen(true)} label="Chat Now" />
                     </div>
                 </div>
             </div>
+            {isOpen && <LoginDrawer isOpen={isOpen} setIsOpen={setIsOpen} /> }
         </div>
     );
 }
