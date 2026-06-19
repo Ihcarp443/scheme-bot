@@ -9,9 +9,9 @@ from services.exceptions import(
     UnsupportedLanguageError
 )
 
-
 router = APIRouter()
 
+print("Chat triggered successfully")
 
 class ChatRequest(BaseModel):
     message: str
@@ -78,7 +78,8 @@ async def chat(req: ChatRequest):
             "answer": result.get("final_answer", ""),
             "audio": result.get("filename",""),
             "user_lang":result.get("user_lang"),
-            "suggested_ques":result.get("suggested_ques")
+            "suggested_ques":result.get("suggested_ques"),
+            "input_type": result.get("input_type")
         }
     except UnsupportedLanguageError:
         traceback.print_exc()
@@ -98,11 +99,4 @@ async def chat(req: ChatRequest):
             status_code=500,
             detail="Something went wrong. Please try again."
         )
-    # except Exception as e:
-    #     traceback.print_exc()
-    #     return {
-    #         "success": True,
-    #         "thread_id": thread_id,
-    #         "interrupt": False,
-    #         "answer": "Language not supported",
-    #     }
+

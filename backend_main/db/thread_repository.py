@@ -1,6 +1,5 @@
 from db.sqlite import get_db_connection
 
-
 def create_threads_table():
     conn = get_db_connection()
 

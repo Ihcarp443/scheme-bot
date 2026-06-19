@@ -1,140 +1,128 @@
 from langgraph.types import interrupt
 from langchain_core.messages import HumanMessage, AIMessage
 from graph.state import GraphState
-from services.grievance_service import (
-    simulate_payment_status,
-    extract_application_data
-)
+from services.grievance_service import ( simulate_payment_status,extract_application_data)
 from services.llm_service import model
 
 
-GRIEVANCE_TYPES = {
-    "payment_delay": [
-        "application_id"
-    ],
-    "application_issue": [
-        "application_id"
-    ]
-}
+
+# GRIEVANCE_TYPES = {
+#     "payment_delay": [
+#         "application_id"
+#     ],
+#     "application_issue": [
+#         "application_id"
+#     ]
+# }
 
 
-def grievance_tool_node(state: GraphState):
+# def grievance_tool_node(state: GraphState):
 
-    # print("FULL STATE")
-    # print(state)
+#     print(
+#         "complaint_data:",
+#         state.get("complaint_data")
+#     )
 
-    print(
-        "complaint_data:",
-        state.get("complaint_data")
-    )
+#     query = state.get("query_en")
 
-    query = state.get("query_en")
+#     data = dict(
+#         state.get(
+#             "complaint_data",
+#             {}
+#         )
+#     )
 
-    data = dict(
-        state.get(
-            "complaint_data",
-            {}
-        )
-    )
+#     issue_type = state.get(
+#         "issue_type"
+#     )
 
-    issue_type = state.get(
-        "issue_type"
-    )
+#     required = GRIEVANCE_TYPES.get(
+#         issue_type,
+#         []
+#     )
 
-    required = GRIEVANCE_TYPES.get(
-        issue_type,
-        []
-    )
+#     extracted = extract_application_data(
+#         query,
+#         required
+#     )
 
-    extracted = extract_application_data(
-        query,
-        required
-    )
+#     for k, v in extracted.items():
 
-    for k, v in extracted.items():
+#         if v and k not in data:
 
-        if v and k not in data:
+#             data[k] = v
 
-            data[k] = v
+#     missing = [
+#         f
+#         for f in required
+#         if not data.get(f)
+#     ]
 
-    missing = [
-        f
-        for f in required
-        if not data.get(f)
-    ]
+#     print("Missing:", missing)
 
-    print("Missing:", missing)
+#     if missing:
 
-    if missing:
+#         questions_map = {
+#             "application_id":
+#                 "Please provide your application ID"
+#         }
 
-        questions_map = {
-            "application_id":
-                "Please provide your application ID"
-        }
+#         return interrupt({
+#             "type": "ASK_USER",
+#             "missing_fields": missing,
+#             "questions": [
+#                 questions_map[f]
+#                 for f in missing
+#             ],
+#             "partial_data": data
+#         })
+#     print("All data present, processing grievance...")
 
-        return interrupt({
-            "type": "ASK_USER",
-            "missing_fields": missing,
-            "questions": [
-                questions_map[f]
-                for f in missing
-            ],
-            "partial_data": data
-        })
-    print("All data present, processing grievance...")
+#     if issue_type =="application_issue" :
+#         result = simulate_payment_status(
+#             data
+#         )
 
-    if issue_type =="application_issue" :
-    # if issue_type == "payment_delay":
-        result = simulate_payment_status(
-            data
-        )
+#         return {
+#             "final_answer": f"""
+#             Status: {result['status'].upper()}
+#             Message: {result['message']}
+#             """
+#         }
 
-        return {
-            "final_answer": f"""
-            Status: {result['status'].upper()}
-            Message: {result['message']}
-            """
-        }
+#     if issue_type == "payment_delay":
+#         preview = f"""
+#             # Complaint Preview
 
-    if issue_type == "payment_delay":
-    # if issue_type =="application_issue":
-        preview = f"""
-            # Complaint Preview
+#             # Application ID:
+#             # {data['application_id']}
 
-            # Application ID:
-            # {data['application_id']}
+#             # Issue:
+#             # {query}
+#             # """
+#         print("Preview:", preview)
 
-            # Issue:
-            # {query}
-            # """
-        print("Preview:", preview)
-        # if confirmed:
+#         ticket = (
+#             "TICKET-"
+#             + str(
+#                 abs(
+#                     hash(
+#                         str(data)
+#                     )
+#                 ) % 100000
+#             )
+#         )
 
-        ticket = (
-            "TICKET-"
-            + str(
-                abs(
-                    hash(
-                        str(data)
-                    )
-                ) % 100000
-            )
-        )
+#         return {
+#             "final_answer":
+#             f"{preview}✅ Complaint submitted successfully.\nTicket: {ticket}"
+#         }
 
-        return {
-            "final_answer":
-            f"{preview}✅ Complaint submitted successfully.\nTicket: {ticket}"
-        }
 
-        # return {
-        #     "final_answer":
-        #     "❌ Complaint cancelled."
-        # }
-
-    return {
-        "final_answer":
-        "Unable to process grievance."
-    }
+#     return {
+#         "final_answer":
+#         "Unable to process grievance."
+#     }
 
 
 def grievance_formatter_node(
@@ -172,25 +160,123 @@ Instructions:
         ]
     }
 
+GRIEVANCE_TYPES = {
+    "payment_delay": ["application_id"],
+    "application_issue": ["application_id"]
+}
 
-        # confirmed = state.get(
-        #     "confirmed"
-        # )
 
-        # if confirmed is None:
+def grievance_tool_node(state: GraphState):
 
-            # preview = f"""
-            # Complaint Preview
+    print(
+        "complaint_data:",
+        state.get("complaint_data")
+    )
 
-            # Application ID:
-            # {data['application_id']}
+    query = state.get("query_en")
 
-            # Issue:
-            # {query}
-            # """
+    data = dict(
+        state.get(
+            "complaint_data",
+            {}
+        )
+    )
 
-            # return interrupt({
-            #     "type": "CONFIRM",
-            #     "preview": preview,
-            #     "data": data
-            # })
+    issue_type = state.get("issue_type")
+
+    required = GRIEVANCE_TYPES.get(
+        issue_type,
+        []
+    )
+
+    extracted = extract_application_data(
+        query,
+        required
+    )
+
+    for k, v in extracted.items():
+        if v and not data.get(k):
+            data[k] = v
+
+    missing = [
+        field
+        for field in required
+        if not data.get(field)
+    ]
+
+    print("Missing:", missing)
+
+    questions_map = {
+        "application_id":
+            "Please provide your application ID"
+    }
+
+    # Ask for each missing field
+    for field in missing:
+
+        user_answer = interrupt({
+            "type": "ASK_USER",
+            "field": field,
+            "question": questions_map[field],
+            "partial_data": data
+        })
+
+        print(
+            f"Received {field}:",
+            user_answer
+        )
+
+        data[field] = user_answer
+
+    print(
+        "Updated complaint_data:",
+        data
+    )
+
+    # Persist updated data
+    if issue_type == "application_issue":
+
+        result = simulate_payment_status(
+            data
+        )
+
+        return {
+            "complaint_data": data,
+            "final_answer": f"""
+Status: {result['status'].upper()}
+Message: {result['message']}
+"""
+        }
+
+    elif issue_type == "payment_delay":
+
+        preview = f"""
+Complaint Preview
+
+Application ID:
+{data['application_id']}
+
+Issue:
+{query}
+"""
+
+        ticket = (
+            "TICKET-"
+            + str(
+                abs(
+                    hash(str(data))
+                ) % 100000
+            )
+        )
+
+        return {
+            "complaint_data": data,
+            "final_answer":
+                f"{preview}\n\n✅ Complaint submitted successfully.\nTicket: {ticket}"
+        }
+
+    return {
+        "complaint_data": data,
+        "final_answer":
+            "Unable to process grievance."
+    }
