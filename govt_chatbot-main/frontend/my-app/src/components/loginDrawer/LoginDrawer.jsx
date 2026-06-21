@@ -27,7 +27,6 @@ export default function LoginDrawer({ isOpen, setIsOpen }) {
   const [number, setNumber] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const router = useRouter();
   const [errors, setErrors] = useState({
     number: false,
     password: false,
