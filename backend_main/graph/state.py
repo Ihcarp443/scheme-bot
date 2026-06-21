@@ -10,30 +10,28 @@ class ChatMessage(TypedDict):
 class GraphState(TypedDict, total=False):
     user_id: str
     memory: dict
-    
     input_text: str
     input_type: str
     expanded_query:str
     channel:str
-
     user_lang: str
     query_en: str
-
     filters: dict
     docs: list
-
     answer_en: str
     final_answer: str
     filename:str
-
     intent: str
     issue_type: str
-
     complaint_data: dict
-
     selected_route: str
-
     messages: Annotated[List[BaseMessage], add_messages]
 
     chat_history: List[ChatMessage]
     suggested_ques: List[str]
+    chat_history: List[ChatMessage]
+    feedback_mode: bool
+    question: str
+    original_answer: str
+    feedback_reason: str
+    feedback_comment: str

@@ -18,6 +18,7 @@ class UserMemory(BaseModel):
     income: Optional[str] = None
     preferred_language: Optional[str] = None
     family_category: Optional[str] = None
+    
 def memory_update_node(state: GraphState):
 
     user_id = state["user_id"]

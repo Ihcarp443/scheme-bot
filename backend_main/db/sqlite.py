@@ -24,12 +24,24 @@ def init_db():
             PRIMARY KEY(user_id, key)
         )
     """)
+    # conn.execute("""
+    #     CREATE TABLE IF NOT EXISTS feedback (
+    #         id INTEGER PRIMARY KEY AUTOINCREMENT,
+    #         thread_id TEXT NOT NULL,
+    #         answer TEXT NOT NULL,
+    #         feedback TEXT NOT NULL,
+    #         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    #     )
+    # """)
     conn.execute("""
         CREATE TABLE IF NOT EXISTS feedback (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            thread_id TEXT NOT NULL,
-            answer TEXT NOT NULL,
-            feedback TEXT NOT NULL,
+            thread_id TEXT,
+            question TEXT,
+            answer TEXT,
+            feedback TEXT,
+            reason TEXT,
+            comment TEXT,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)

@@ -55,9 +55,17 @@ from graph.nodes.fetch_memory import(
 from graph.nodes.update_memory import(
     memory_update_node
 )
-# checkpointer = MemorySaver()
 
-# checkpointer = SqliteSaver(conn)
+from graph.nodes.feedback import (
+    feedback_improve_node
+)
+
+def start_router(state):
+
+    if state.get("feedback_mode"):
+        return "feedback"
+
+    return "normal"
 checkpointer = SqliteSaver(conn=checkpoint_conn)
 
 builder = StateGraph(GraphState)
@@ -65,7 +73,6 @@ builder = StateGraph(GraphState)
 # =========================
 # Nodes
 # =========================
-
 
 builder.add_node(
     "text_input",
@@ -76,6 +83,7 @@ builder.add_node(
     "tool_agent",
     tool_agent
 )
+
 builder.add_node(
     "fetch_memory",
     memory_fetch_node
@@ -85,10 +93,12 @@ builder.add_node(
     "grievance_entry",
     grievance_entry_node
 )
+
 builder.add_node(
     "rag_router",
     rag_router
 )
+
 builder.add_node(
     "general",
     general_node
@@ -103,6 +113,7 @@ builder.add_node(
     "general_router",
     general_router
 )
+
 builder.add_node(
     "filter",
     extract_filters_from_llm_node
@@ -142,15 +153,25 @@ builder.add_node(
     "update_memory",
     memory_update_node
 )
-
-
+builder.add_node(
+    "feedback_improve",
+    feedback_improve_node
+)
 # =========================
 # Flow
 # =========================
 
-builder.add_edge(
+# builder.add_edge(
+#     START,
+#     "text_input"
+# )
+builder.add_conditional_edges(
     START,
-    "text_input"
+    start_router,
+    {
+        "feedback": "feedback_improve",
+        "normal": "text_input"
+    }
 )
 
 builder.add_edge(
@@ -208,6 +229,7 @@ builder.add_edge(
     "grievance_entry",
     "grievance"
 )
+
 builder.add_edge(
     "grievance",
     "grievance_formatter"
@@ -229,6 +251,10 @@ builder.add_edge(
 
 builder.add_edge("general", "update_memory")
 
+builder.add_edge(
+    "feedback_improve",
+    "translate"
+)
 builder.add_edge("update_memory", "translate")
 # =========================
 # End
@@ -243,6 +269,7 @@ builder.add_conditional_edges(
     }
 )
 
+
 builder.add_edge(
     "dictate",
     END
@@ -251,4 +278,5 @@ builder.add_edge(
 graph = builder.compile(
     checkpointer=checkpointer
 )
+
 print("Graph Compiled")

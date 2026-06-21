@@ -2,10 +2,14 @@
 
 from db.sqlite import get_db_connection
 
+
 def save_feedback(
     thread_id: str,
+    question: str,
     answer: str,
-    feedback: str
+    feedback: str,
+    reason: str | None = None,
+    comment: str | None = None
 ):
     conn = get_db_connection()
 
@@ -14,15 +18,21 @@ def save_feedback(
         INSERT INTO feedback
         (
             thread_id,
+            question,
             answer,
-            feedback
+            feedback,
+            reason,
+            comment
         )
-        VALUES (?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?)
         """,
         (
             thread_id,
+            question,
             answer,
-            feedback
+            feedback,
+            reason,
+            comment
         )
     )
 

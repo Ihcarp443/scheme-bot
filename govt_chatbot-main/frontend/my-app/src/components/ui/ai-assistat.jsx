@@ -33,36 +33,69 @@ const AIMessageBar = () => {
   const [selectedThread, setSelectedThread] =useState(null);
   const[loadPastChat,setloadPastChat]=useState(false)
   const[user_id,setuserId]=useState("")
+  const [showFeedbackModal, setShowFeedbackModal] = useState(false);
+  const [selectedMessage, setSelectedMessage] = useState(null);
+  const [feedbackReason, setFeedbackReason] = useState("");
+  const [customReason, setCustomReason] = useState("");
+  const reasons = [
+  "Too long",
+  "Too short",
+  "Wrong information",
+  "Hard to understand",
+  "Wrong language",
+  "Other"
+];
 
-  // const submitFeedback = async (
-  //   msg,
-  //   feedback
-  // ) => {
-  //   try {
-  //     await fetch(
-  //       `${BASE_URL}/feedback`,
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type":
-  //             "application/json",
-  //         },
-  //         body: JSON.stringify({
-  //           thread_id: threadID,
-  //           answer: msg.text,
-  //           feedback,
-  //         }),
-  //       }
-  //     );
+  const regenerateAnswer = async () => {
+  try {
 
-  //     toast.success(
-  //       "Feedback submitted"
-  //     );
+    const response = await fetch(`${BASE_URL}/feedback/improve`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        question: selectedMessage?.question || "",
+        answer: selectedMessage?.text || "",
+        reason: feedbackReason,
+        comment: customReason,
+        lang: selectedMessage?.lang || "en",
+        thread_id: threadID,
+        input_type: selectedMessage?.input_type || "text"
+        
+      }),
+    });
 
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
+    const data =
+      await response.json();
+
+    if (data.success) {
+
+      setMessages(prev => [
+        ...prev,
+        {
+          text: data.improved_answer,
+          isUser: false,
+          animate: true,
+          lang: selectedMessage.lang,
+          improved: true,
+          question: selectedMessage.question
+        }
+      ]);
+
+      toast.success(
+        "Improved answer generated"
+      );
+    }
+
+    setShowFeedbackModal(false);
+
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+
   const submitFeedback = async (
   msg,
   feedback
@@ -85,10 +118,13 @@ const AIMessageBar = () => {
             "application/json",
         },
         body: JSON.stringify({
-          thread_id: threadID,
-          answer: msg.text,
-          feedback,
-        }),
+        thread_id: threadID,
+        question: msg.question || "",
+        answer: msg.text,
+        feedback,
+        reason: feedbackReason,
+        comment: customReason,
+      })
       }
     );
 
@@ -858,9 +894,10 @@ return (
                       </button>
 
                       <button
-                        onClick={() =>
-                          submitFeedback(msg, "dislike")
-                        }
+                        onClick={() => {
+                          setSelectedMessage(msg);
+                          setShowFeedbackModal(true);
+                        }}
                         className="
                           p-1.5
                           rounded-md
@@ -1066,6 +1103,95 @@ return (
         </style>
       </div>
     </div>
+    {
+showFeedbackModal && (
+<div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+
+  <div className="bg-slate-900 p-6 rounded-xl w-[500px]">
+
+    <h3 className="text-white text-lg mb-4">
+      What didn't you like?
+    </h3>
+
+    <div className="space-y-2">
+
+      {reasons.map(reason => (
+        <button
+          key={reason}
+          onClick={() =>
+            setFeedbackReason(reason)
+          }
+          className={`
+            w-full text-left p-3 rounded-lg
+            ${
+              feedbackReason === reason
+              ? "bg-indigo-600"
+              : "bg-slate-800"
+            }
+          `}
+        >
+          {reason}
+        </button>
+      ))}
+
+    </div>
+
+    {
+        feedbackReason === "Other" && (
+          <textarea
+            value={customReason}
+            onChange={(e) =>
+              setCustomReason(
+                e.target.value
+              )
+            }
+            className="
+              mt-4
+              w-full
+              p-3
+              rounded-lg
+              bg-slate-800
+              text-white
+            "
+            placeholder="Tell us more..."
+          />
+        )
+      }
+
+      <div className="flex justify-end gap-3 mt-5">
+
+        <button
+          onClick={() =>
+            setShowFeedbackModal(false)
+          }
+          className="
+            px-4 py-2
+            bg-slate-700
+            rounded-lg
+          "
+        >
+          Cancel
+        </button>
+
+        <button
+          onClick={regenerateAnswer}
+          disabled={!feedbackReason}
+          className="
+            px-4 py-2
+            bg-indigo-600
+            rounded-lg
+          "
+        >
+          Improve Answer
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+  )
+  }
   </>
 );
 };
