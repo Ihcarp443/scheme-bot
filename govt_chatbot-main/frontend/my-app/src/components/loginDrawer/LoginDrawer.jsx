@@ -21,12 +21,12 @@ import { toast } from "sonner";
 const BASE_URL = process.env.NEXT_PUBLIC_ENDPOINT || "http://50.19.164.128:8000";
 
 export default function LoginDrawer({ isOpen, setIsOpen }) {
+  const router=useRouter()
   const [action, setAction] = useState("login");
   const [isLoading, setIsLoading] = useState(false);
   const [number, setNumber] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const router = useRouter();
   const [errors, setErrors] = useState({
     number: false,
     password: false,

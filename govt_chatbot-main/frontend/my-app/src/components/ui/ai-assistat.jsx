@@ -6,6 +6,7 @@ import remarkGfm from "remark-gfm";
 import { ChatSkeleton } from "./ChatSkelton";
 import TextType from "./TextType";
 import { Component } from "./profileDropdown";
+// import AnimatedGenerateButton from "@/components/ui/animated-generate-button-shadcn-tailwind";
 import {
   ThumbsUp,
   ThumbsDown,
@@ -1108,28 +1109,29 @@ return (
     </div>
     {
 showFeedbackModal && (
-<div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+<div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50">
 
-  <div className="bg-slate-900 p-6 rounded-xl w-[500px]">
+  <div className="bg-[#1e1f23] border border-[#303236] p-6 rounded-2xl w-[500px] shadow-2xl">
 
-    <h3 className="text-white text-lg mb-4">
+    <h3 className="text-white text-xl font-medium mb-5">
       What didn't you like?
     </h3>
 
-    <div className="space-y-2">
+    <div className="space-y-3">
 
       {reasons.map(reason => (
         <button
           key={reason}
-          onClick={() =>
-            setFeedbackReason(reason)
-          }
+          onClick={() => setFeedbackReason(reason)}
           className={`
-            w-full text-left p-3 rounded-lg
+            w-full text-left p-3.5 rounded-xl
+            text-sm text-slate-200
+            transition-all duration-200
+            border
             ${
               feedbackReason === reason
-              ? "bg-indigo-600"
-              : "bg-slate-800"
+                ? "bg-indigo-600/20 border-indigo-500 text-white ring-1 ring-indigo-500"
+                : "bg-[#2a2b30] border-[#3a3b42] hover:bg-[#34353c] hover:border-[#50515a]"
             }
           `}
         >
@@ -1140,59 +1142,76 @@ showFeedbackModal && (
     </div>
 
     {
-        feedbackReason === "Other" && (
-          <textarea
-            value={customReason}
-            onChange={(e) =>
-              setCustomReason(
-                e.target.value
-              )
-            }
-            className="
-              mt-4
-              w-full
-              p-3
-              rounded-lg
-              bg-slate-800
-              text-white
-            "
-            placeholder="Tell us more..."
-          />
-        )
-      }
-
-      <div className="flex justify-end gap-3 mt-5">
-
-        <button
-          onClick={() =>
-            setShowFeedbackModal(false)
-          }
+      feedbackReason === "Other" && (
+        <textarea
+          value={customReason}
+          onChange={(e) => setCustomReason(e.target.value)}
           className="
-            px-4 py-2
-            bg-slate-700
-            rounded-lg
+            mt-4
+            w-full
+            p-3.5
+            rounded-xl
+            bg-[#2a2b30]
+            border border-[#3a3b42]
+            text-white
+            placeholder:text-slate-400
+            focus:outline-none
+            focus:ring-1
+            focus:ring-indigo-500
+            resize-none
           "
-        >
-          Cancel
-        </button>
+          rows={4}
+          placeholder="Tell us more..."
+        />
+      )
+    }
 
-        <button
-          onClick={regenerateAnswer}
-          disabled={!feedbackReason}
-          className="
-            px-4 py-2
-            bg-indigo-600
-            rounded-lg
-          "
-        >
-          Improve Answer
-        </button>
+    <div className="flex justify-end gap-3 mt-6">
 
-      </div>
+      <button
+        onClick={() => setShowFeedbackModal(false)}
+        className="
+          px-4 py-2.5
+          rounded-xl
+          text-slate-300
+          bg-[#2a2b30]
+          border border-[#3a3b42]
+          hover:bg-[#34353c]
+          transition
+          cursor-pointer
+        "
+      >
+        Cancel
+      </button>
 
+
+      {/* <AnimatedGenerateButton
+        onClick={regenerateAnswer}
+        disabled={!feedbackReason}
+        labelIdle="Generate"
+        labelActive="Building"
+        highlightHueDeg={5000} 
+      />; */}
+      <button
+        onClick={regenerateAnswer}
+        disabled={!feedbackReason}
+        className="
+          px-4 py-2.5
+          rounded-xl
+          bg-indigo-600
+          text-white
+          hover:bg-indigo-500
+          disabled:opacity-50
+          disabled:cursor-not-allowed
+          transition
+          cursor-pointer
+        "
+      >
+        Regenrate
+      </button>
     </div>
-
   </div>
+</div>
   )
   }
   </>
@@ -1200,3 +1219,91 @@ showFeedbackModal && (
 };
 
 export default AIMessageBar;
+
+
+
+// <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+
+//   <div className="bg-slate-900 p-6 rounded-xl w-[500px]">
+
+//     <h3 className="text-white text-lg mb-4">
+//       What didn't you like?
+//     </h3>
+
+//     <div className="space-y-2">
+
+//       {reasons.map(reason => (
+//         <button
+//           key={reason}
+//           onClick={() =>
+//             setFeedbackReason(reason)
+//           }
+//           className={`
+//             w-full text-left p-3 rounded-lg
+//             ${
+//               feedbackReason === reason
+//               ? "bg-indigo-600"
+//               : "bg-slate-800"
+//             }
+//           `}
+//         >
+//           {reason}
+//         </button>
+//       ))}
+
+//     </div>
+
+//     {
+//         feedbackReason === "Other" && (
+//           <textarea
+//             value={customReason}
+//             onChange={(e) =>
+//               setCustomReason(
+//                 e.target.value
+//               )
+//             }
+//             className="
+//               mt-4
+//               w-full
+//               p-3
+//               rounded-lg
+//               bg-slate-800
+//               text-white
+//             "
+//             placeholder="Tell us more..."
+//           />
+//         )
+//       }
+
+//       <div className="flex justify-end gap-3 mt-5">
+
+//         <button
+//           onClick={() =>
+//             setShowFeedbackModal(false)
+//           }
+//           className="
+//             px-4 py-2
+//             bg-slate-700
+//             rounded-lg
+//           "
+//         >
+//           Cancel
+//         </button>
+
+//         <button
+//           onClick={regenerateAnswer}
+//           disabled={!feedbackReason}
+//           className="
+//             px-4 py-2
+//             bg-indigo-600
+//             rounded-lg
+//           "
+//         >
+//           Improve Answer
+//         </button>
+
+//       </div>
+
+//     </div>
+
+//   </div>
