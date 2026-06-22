@@ -48,8 +48,19 @@ const AIMessageBar = () => {
 ];
 
   const regenerateAnswer = async () => {
+    setMessages(prev => [
+  ...prev,
+  {
+    text: `**Feedback**: ${feedbackReason}${
+      customReason ? ` - ${customReason}` : ""
+    }`,
+    isUser: true,
+    isFeedback: true
+  }
+]);
+  setShowFeedbackModal(false);
   try {
-
+    setIsTyping(true)
     const response = await fetch(`${BASE_URL}/feedback/improve`, {
       method: "POST",
       headers: {
@@ -71,7 +82,7 @@ const AIMessageBar = () => {
       await response.json();
 
     if (data.success) {
-
+      setIsTyping(false)
       setMessages(prev => [
         ...prev,
         {
@@ -88,10 +99,11 @@ const AIMessageBar = () => {
         "Improved answer generated"
       );
     }
-
+    setIsTyping(false)
     setShowFeedbackModal(false);
 
   } catch (err) {
+    setIsTyping(false)
     console.error(err);
   }
 };
@@ -118,14 +130,22 @@ const AIMessageBar = () => {
           "Content-Type":
             "application/json",
         },
-        body: JSON.stringify({
-        thread_id: threadID,
-        question: msg.question || "",
-        answer: msg.text,
-        feedback,
-        reason: feedbackReason,
-        comment: customReason,
-      })
+      //   body: JSON.stringify({
+      //   thread_id: threadID,
+      //   question: msg.question || "",
+      //   answer: msg.text,
+      //   feedback,
+      //   reason: feedbackReason,
+      //   comment: customReason,
+      // })
+      body: JSON.stringify({
+      thread_id: threadID,
+      question: msg.question || "",
+      answer: msg.text,
+      feedback,
+      reason: feedback === "dislike" ? feedbackReason : null,
+      comment: feedback === "dislike" ? customReason : null,
+    })
       }
     );
 
@@ -814,14 +834,25 @@ return (
               ) : msg.animate ? (
                 /* 🤖 AI MESSAGE → typing effect */
                <div>
-    <TextType
-      text={msg.text}
-      typingSpeed={30}
-      showCursor={true}
-      cursorCharacter="|"
-      onComplete={() => handleShowSuggestions(index)}
-      variableSpeed={{ min: 10, max: 25 }}
-    />
+                 {/* <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  {msg.text}
+                </ReactMarkdown> */}
+              <TextType
+                text={msg.text}
+                typingSpeed={30}
+                showCursor={true}
+                cursorCharacter="|"
+                onComplete={() => handleShowSuggestions(index)}
+                variableSpeed={{ min: 10, max: 25 }}
+                render={(text) => (
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}
+                    components={{
+                        p: ({ children }) => <span>{children}</span>,
+                      }}>
+                    {text}
+                  </ReactMarkdown>
+                )}
+              />
 
     {!msg.isUser && msg.showSuggestions && msg.ques?.length > 0 && (
       <div className="mt-3">
@@ -862,7 +893,7 @@ return (
               </div>
             </div>
               {/* Feedback Buttons */}
-                {!msg.isUser && (
+                {!msg.isUser  && !msg.error && (
                     <div
                       className="
                         flex
@@ -874,6 +905,7 @@ return (
                         duration-200
                       "
                     >
+
                       <button
                         onClick={() =>
                           submitFeedback(msg, "like")
@@ -891,15 +923,21 @@ return (
                               size={14}
                               className={
                                 msg.feedback === "like"
-                                  ? "text-green-500"
-                                  : ""
+                                    ? "bg-green-900/40 text-green-400"
+                                    : "text-slate-500 hover:text-green-400 hover:bg-slate-800"
                               }
                             />
                       </button>
 
                       <button
+                        // onClick={() => {
+                        //   setSelectedMessage(msg);
+                        //   setShowFeedbackModal(true);
+                        // }}
                         onClick={() => {
                           setSelectedMessage(msg);
+                          setFeedbackReason("");
+                          setCustomReason("");
                           setShowFeedbackModal(true);
                         }}
                         className="
@@ -914,9 +952,9 @@ return (
                         <ThumbsDown
                           size={14}
                           className={
-                            msg.feedback === "dislike"
-                              ? "text-red-500"
-                              : ""
+                               msg.feedback === "dislike"
+                                  ? "bg-red-900/40 text-red-400"
+                                  : "text-slate-500 hover:text-red-400 hover:bg-slate-800"
                           }
                         />
                       </button>
@@ -1207,7 +1245,7 @@ showFeedbackModal && (
           cursor-pointer
         "
       >
-        Regenrate
+        Regenerate
       </button>
     </div>
   </div>

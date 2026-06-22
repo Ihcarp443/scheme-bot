@@ -13,6 +13,7 @@ import { gsap } from 'gsap';
 const TextType = ({
   text,
   as: Component = 'div',
+  render,
   typingSpeed = 50,
   initialDelay = 0,
   className = '',
@@ -64,6 +65,12 @@ const TextType = ({
     observer.observe(containerRef.current);
     return () => observer.disconnect();
   }, [startOnVisible]);
+  
+  useEffect(() => {
+  setDisplayedText("");
+  setCurrentCharIndex(0);
+  setIsDone(false);
+}, [text]);
 
   // cursor blink (only while typing)
   useEffect(() => {
@@ -130,17 +137,23 @@ const TextType = ({
     Component,
     {
       ref: containerRef,
-      className: `inline-block whitespace-pre-wrap tracking-tight ${className}`,
+      // className: `inline-block whitespace-pre-wrap tracking-tight ${className}`,
+      className: ` whitespace-pre-wrap tracking-tight ${className}`,
       ...props
     },
     <>
-      <span
+      {/* <span
         className="inline"
         style={{ color: getCurrentTextColor() }}
       >
         {displayedText}
-      </span>
-
+      </span> */}
+        <span
+        className="inline"
+        style={{ color: getCurrentTextColor() }}
+        >
+          {render ? render(displayedText) : displayedText}
+        </span>
       {shouldShowCursor && (
         <span
           ref={cursorRef}
