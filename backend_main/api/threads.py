@@ -1,3 +1,5 @@
+from flask import config
+
 from fastapi import APIRouter
 
 from db.thread_repository import get_all_threads
@@ -42,7 +44,16 @@ async def get_thread_messages(thread_id: str):
 @router.delete("/{thread_id}")
 def remove_thread(thread_id: str):
     try:
-        delete_thread(thread_id)
+        print(f"Deleting thread with id: {thread_id}")
+        config = {
+            "configurable": {
+                "thread_id": thread_id
+            }
+        }
+        
+        state = graph.get_state(config)
+        user_id = state.values.get("user_id")
+        delete_thread(thread_id, user_id)
         return {
             "success": True,
             "message": "Thread deleted successfully"

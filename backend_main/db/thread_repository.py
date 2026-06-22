@@ -106,6 +106,6 @@ def delete_thread(thread_id: str, user_id: str):
         """,
         (thread_id, user_id)
     )
-
+    print(f"Deleted thread with id: {thread_id} for user: {user_id}")
     conn.commit()
     conn.close()
