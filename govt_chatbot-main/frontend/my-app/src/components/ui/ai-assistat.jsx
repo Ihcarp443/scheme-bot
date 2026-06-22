@@ -148,7 +148,8 @@ const AIMessageBar = () => {
 
   try {  
     setIsTyping(true);
-    const field =interruptData.missing_fields[0];
+    // const field =interruptData.missing_fields[0];
+    const field = interruptData.field;
     console.log("userInturrp",userInput)
     if(isNaN(userInput)){
       setIsTyping(false);
@@ -183,9 +184,10 @@ const AIMessageBar = () => {
 
       setInterruptData(res.interrupt);
       user_lang=res.user_lang;
+      const questions = res.data.questions ?? [res.data.question];
       setMessages(prev => [
         ...prev,
-        ...res.interrupt.questions.map(q => ({
+        ...questions.map(q => ({
           text: q,
           isUser: false,
           lang:user_lang,
@@ -338,10 +340,11 @@ const AIMessageBar = () => {
         console.log("Received interrupt");
         setInterrupt(true);
         setInterruptData(res.data);
+        const questions = res.data.questions ?? [res.data.question];
 
         setMessages(prev => [
           ...prev,
-          ...res.data.questions.map(q => ({
+          ...questions.map(q => ({
             text: q,
             isUser: false,
             animate:true,

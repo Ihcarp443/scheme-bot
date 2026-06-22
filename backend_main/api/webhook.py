@@ -118,8 +118,8 @@ def process_message(
 
     thread_id = user_number+'009'
 
-def process_message(user_msg):
-    thread_id="20005"
+def process_message(user_msg, user_number):
+    thread_id= user_number+'009'
     config = {
         "configurable": {
             "thread_id": thread_id
