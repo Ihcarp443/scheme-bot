@@ -164,9 +164,16 @@ def answer_node(state):
     else:
         prompt = web_prompt
 
+    print("CALLING LLM...")
+
     response = model.invoke(prompt)
+
+    print("RESPONSE TYPE:", type(response))
+    print("RESPONSE:", response)
     if channel == "website":
         raw_output = response.content.strip()
+        print("RAW OUTPUT REPR:", repr(raw_output))
+        print("TYPE:", type(raw_output))
         print("RAW-CHAT:",raw_output)
         data = json.loads(raw_output)
         print("JSON-DATA:",data)

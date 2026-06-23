@@ -854,7 +854,11 @@ return (
                 )}
               />
 
-    {!msg.isUser && msg.showSuggestions && msg.ques?.length > 0 && (
+    {/* {!msg.isUser && msg.showSuggestions && msg.ques?.length > 0 && ( */}
+    {!msg.isUser &&
+  msg.showSuggestions &&
+  Array.isArray(msg.ques) &&
+  msg.ques.filter(q => q?.trim()).length > 0 && (
       <div className="mt-3">
         <div className="text-lg text-slate-400 mb-2">
           Suggestion:
@@ -876,7 +880,7 @@ return (
                 cursor-pointer
               "
             >
-              <span>›</span>
+              <span>-</span>
               <span>{q}</span>
             </button>
           ))}

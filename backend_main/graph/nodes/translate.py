@@ -39,9 +39,21 @@ def translate_node_for_user(state):
         state["answer_en"],
         state["user_lang"]
     )
+    questions = state["suggested_ques"]
 
+    suggestion_translation = []
+    for ques in questions:
+        q_translated = translate_to_user_language(
+            ques,
+            state["user_lang"]
+        )
+        suggestion_translation.append(q_translated)
+    
+    print("Sugg. translation: ",suggestion_translation)
+    print(len(suggestion_translation))
     return {
         "final_answer": translated,
+        "suggested_ques":suggestion_translation,
         "messages": [
             AIMessage(content=state["answer_en"])
         ],
@@ -49,7 +61,7 @@ def translate_node_for_user(state):
         state,
         "assistant",
         translated,
-        state["user_lang"]
+        state["user_lang"],
     )
     }
 
