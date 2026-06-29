@@ -12,7 +12,7 @@ cd scheme-bot
 ```text
 scheme-bot/
 │
-├── frontend/          # Next.js Frontend
+├──govt_chatbot-main/frontend/my_app          # Next.js Frontend
 ├── backend_main/my_app          # FastAPI Backend
 ├── README.md
 └── ...
@@ -88,7 +88,7 @@ pip install -r requirements.txt
 Navigate to the frontend folder.
 
 ```bash
-cd ../frontend/my-app
+cd ..govt_chatbot-main/frontend/my-app
 ```
 
 Install all Node.js dependencies.
@@ -124,7 +124,7 @@ SARVAM_API_KEY=
 
 ### Frontend
 
-Inside the **frontend/my-app** folder, create a file named:
+Inside the **govt_chatbot-main/frontend/my-app** folder, create a file named:
 
 ```text
 .env
@@ -221,7 +221,7 @@ http://localhost:8000/docs (Directly paste this URL in your browser)
 Open another terminal.
 
 ```bash
-cd frontend
+cd govt_chatbot-main/frontend/my-app
 ```
 
 Run:
