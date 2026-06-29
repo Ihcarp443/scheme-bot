@@ -144,32 +144,31 @@ NEXT_PUBLIC_API_URL=http://localhost:8000
 
 ## Step 6: Configure Database Files
 
-A database folder must be created manually.
 
-Inside the **backend_main** directory, create the following folder:
+Inside the **backend_main** directory, inside data folder :
 
 ```text
 backend/
-└── DB/
+└── data/
 ```
 
-Copy the **two database files provided separately** into this folder.
+Copy the **Scheme_DB fodler provided separately** into this folder.
 
 The final structure should look like:
 
 ```text
 backend/
 │
-├── DB/
-│   ├── file1
-│   └── file2
+├── data/
+│   ├── Scheme_DB
+│   └── schemes
 │
 ├── main.py
 ├── requirements.txt
 └── ...
 ```
 
-> **Note:** The required database files are not included in the repository and must be copied manually before running the backend.
+> **Note:** The required database folder is not included in the repository and must be copied manually before running the backend.
 
 ---
 
