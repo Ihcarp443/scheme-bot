@@ -51,3 +51,12 @@ temp/
 *.faiss
 *.pkl
 *.db
+
+
+node_modules/
+venv/
+.env
+.next/
+benv/
+older_backend/
+__pycache__/
