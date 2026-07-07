@@ -1,52 +1,12 @@
 # api/audio.py
-
 import os
 import tempfile
-
+import uuid
 from fastapi import APIRouter, UploadFile, File, HTTPException
-
 from services.sarvam_service import speech_to_text
 from services.audio_file_conversion_service import convert_webm_to_wav
+
 router = APIRouter()
-
-
-# @router.post("/transcribe")
-# async def transcribe_audio(
-#     audio: UploadFile = File(...)
-# ):
-
-#     try:
-#         print("API GOT A HIT")
-#         suffix = os.path.splitext(audio.filename)[1]
-
-#         with tempfile.NamedTemporaryFile(
-#             delete=False,
-#             suffix=suffix
-#         ) as temp_file:
-
-#             temp_file.write(await audio.read())
-#             temp_path = temp_file.name
-
-#         transcript = speech_to_text(temp_path)
-
-#         os.remove(temp_path)
-
-#         return {
-#             "transcript": transcript
-#         }
-
-#     except Exception as e:
-
-#         raise HTTPException(
-#             status_code=500,
-#             detail=str(e)
-#         )
-
-
-
-
-
-import uuid
 
 @router.post("/transcribe")
 async def transcribe_audio(
@@ -80,7 +40,6 @@ async def transcribe_audio(
             wav_path
         )
 
-        
         # Convert WAV → Text
         try:
             transcript = speech_to_text(wav_path)
@@ -106,6 +65,7 @@ async def transcribe_audio(
         )
     finally:
         # Delete temp files
+        
         if webm_path and os.path.exists(webm_path):
             os.remove(webm_path)
 

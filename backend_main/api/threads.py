@@ -1,5 +1,3 @@
-from flask import config
-
 from fastapi import APIRouter
 
 from db.thread_repository import get_all_threads

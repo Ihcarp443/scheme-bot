@@ -28,7 +28,6 @@ async def chat(req: ChatRequest):
             thread_id,
             user_id=req.user_id,
             title=req.message[:50],
-            
         )
     else:
         thread_id = req.thread_id

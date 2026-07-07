@@ -23,100 +23,6 @@ client = Client(ACCOUNT_SID, AUTH_TOKEN)
 TWILIO_NUMBER = os.getenv("TWILIO_WHATSAPP_NUMBER")
 interrupt = False
 
-# def process_message(user_msg):
-#     thread_id="20004"
-#     config = {
-#         "configurable": {
-#             "thread_id": thread_id
-#         }
-#     }
-
-#     state = {
-#         "user_id": "10004",
-#         "input_type": "text",
-#         "input_text": user_msg,
-#         "channel": "whatsapp",
-#         "messages": [],
-#         "complaint_data": {}
-#     }
-
-#     try:
-#         from langgraph.types import Command
-
-#         snapshot = graph.get_state(config)
-#         print("Snapshot state:", snapshot)
-
-
-#         result = graph.invoke(
-#             state,
-#             config=config
-#         )
-
-#         # Handle interrupts if your graph returns them
-#         # if "__interrupt__" in result:
-
-#         #     interrupt_data = result["__interrupt__"][0].value
-
-#         #     answer = "\n".join(
-#         #         interrupt_data.get("questions", [])
-#         #     )
-        
-
-#         if "__interrupt__" in result:
-#             interrupt = True
-
-#             interrupt_data = (
-#                 result["__interrupt__"][0]
-#                 .value
-#             )
-#             answer = "\n".join(
-#                 interrupt_data.get("questions", [])
-#             )
-
-            
-
-#         else:
-#             answer = result.get(
-#                 "final_answer",
-#                 "Sorry, I couldn't process your request."
-#             )
-
-#     except (
-#         TranslationError,
-#         UnsupportedLanguageError
-#     ) as e:
-#         print("Translation Error:", e)
-
-#         answer = (
-#             "Sorry, your language is currently not supported."
-#         )
-
-#     except Exception as e:
-#         print("Error processing message:", e)
-#         print("BACKGROUND ERROR")
-#         answer = (
-#             "❌ Sorry, something went wrong. Please try again later."
-#         )
-
-#     # Send the final answer to WhatsApp
-#     user_number=os.getenv("USER_WHATSAPP_NUMBER")
-#     try:
-#         message = client.messages.create(
-#             from_=TWILIO_NUMBER,
-#             to=user_number,
-#             body=answer
-#         )
-
-#         print("WhatsApp message sent:", message.sid)
-
-#     except Exception:
-#         print("TWILIO SEND ERROR")
-def process_message(
-    user_msg,
-    user_number
-):
-
-    thread_id = user_number+'009'
 
 def process_message(user_msg, user_number):
     thread_id= user_number+'009'
@@ -180,9 +86,9 @@ def process_message(user_msg, user_number):
         else:
 
             answer = result.get(
-                "answer_en"
+                "final_answer"
             ) or result.get(
-                "final_answer",
+                "answer_en",
                 "Sorry, I couldn't process your request."
             )
 
@@ -192,19 +98,15 @@ def process_message(user_msg, user_number):
     ) as e:
 
         print("Translation Error:", e)
-
-        # answer = (
-        #     "Sorry, your language is currently not supported."
-        # )
         answer = (
-            "Sorry,something wrong on our end."
+            "Sorry, something wrong on our end."
         )
 
     except Exception as e:
         print("BACKGROUND ERROR")
         print("Error:",e)
         answer = (
-            "❌ Sorry, something went wrong. Please try again later."
+            "Sorry, something went wrong. Please try again later."
         )
 
     user_number = os.getenv(
@@ -231,26 +133,6 @@ def process_message(user_msg, user_number):
             e
         )
 
-# @router.post("/whatsapp/webhook")
-# async def webhook(
-#     request: Request,
-#     background_tasks: BackgroundTasks
-# ):
-
-#     form = await request.form()
-
-#     user_msg = form.get("Body") or "Hi"
-
-    
-#     print("Received WhatsApp message:", user_msg)
-
-#     background_tasks.add_task(
-#         process_message,
-#         user_msg,
-#     )
-    
-
-#     return {"status": "received"}
 @router.post("/whatsapp/webhook")
 async def webhook(
     request: Request,

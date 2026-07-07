@@ -1,8 +1,5 @@
 import sqlite3
 
-
-
-
 def init_db():
     conn = get_db_connection()
 
@@ -24,15 +21,7 @@ def init_db():
             PRIMARY KEY(user_id, key)
         )
     """)
-    # conn.execute("""
-    #     CREATE TABLE IF NOT EXISTS feedback (
-    #         id INTEGER PRIMARY KEY AUTOINCREMENT,
-    #         thread_id TEXT NOT NULL,
-    #         answer TEXT NOT NULL,
-    #         feedback TEXT NOT NULL,
-    #         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    #     )
-    # """)
+   
     conn.execute("""
         CREATE TABLE IF NOT EXISTS feedback (
             id INTEGER PRIMARY KEY AUTOINCREMENT,

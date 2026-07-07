@@ -9,7 +9,6 @@ class SignupRequest(BaseModel):
     phone: str
     password: str
 
-
 @router.post("/signup")
 def signup(req: SignupRequest):
 

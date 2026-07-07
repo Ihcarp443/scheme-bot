@@ -4,7 +4,6 @@ from db.feedback_repository import save_feedback
 from graph.graph_builder import graph
 router = APIRouter()
 
-
 class FeedbackRequest(BaseModel):
     thread_id: str
     question: str
@@ -12,7 +11,6 @@ class FeedbackRequest(BaseModel):
     feedback: str
     reason: str | None = None
     comment: str | None = None
-    
 
 @router.post("")
 async def submit_feedback(req: FeedbackRequest):
@@ -38,13 +36,10 @@ class ImproveRequest(BaseModel):
     lang: str | None = "en"
     input_type: str | None = "text"
 
-# from services.feedback_improver import improve_answer as improve_answer_service
-
 @router.post("/improve")
 async def improve_answer(req: ImproveRequest):
 
     print("Received request to improve answer:", req)
-    
 
     config = {
         "configurable": {

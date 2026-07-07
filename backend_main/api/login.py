@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from db.sqlite import get_db_connection
-from services.auth import hash_password, verify_password
+from services.auth import verify_password
 
 router=APIRouter()
 
