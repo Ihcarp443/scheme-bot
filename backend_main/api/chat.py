@@ -28,20 +28,18 @@ async def chat(req: ChatRequest):
             thread_id,
             user_id=req.user_id,
             title=req.message[:50],
-            
         )
     else:
         thread_id = req.thread_id
     
-    user_id=req.user_id
-    print("user_id",user_id)
+    user_id = req.user_id
+
     config = {
         "configurable": {
             "thread_id": thread_id
         }
     }
     state = {
-        # "input_type": "text",
         "user_id":user_id,
         "input_type": req.input_type,
         "input_text": req.message,
@@ -99,4 +97,3 @@ async def chat(req: ChatRequest):
             status_code=500,
             detail="Something went wrong. Please try again."
         )
-

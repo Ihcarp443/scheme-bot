@@ -1,7 +1,6 @@
 from sarvamai import SarvamAI
 from dotenv import load_dotenv
 import os
-
 from services.exceptions import(
     TranslationError,
     UnsupportedLanguageError
@@ -9,23 +8,12 @@ from services.exceptions import(
 from sarvamai.errors import UnprocessableEntityError
 
 load_dotenv()
-print("API KEY:", os.getenv("SARVAM_API_KEY"))
+
+# print("API KEY:", os.getenv("SARVAM_API_KEY"))
+
 client = SarvamAI(
     api_subscription_key=os.getenv("SARVAM_API_KEY")
 )
-
-# def translate_to_english(query):
-#     try:
-#         response = client.text.translate(
-#         input=query,
-#         source_language_code="auto",
-#         target_language_code="en-IN",
-#         )
-#         return {'user_lang': response.source_language_code, 'query':response.translated_text}
-#     except:
-#         print("Translation to language failed::")
-#         raise Exception("Translation failed")
-
 
 def translate_to_english(query):
     try:
@@ -54,10 +42,6 @@ def translate_to_english(query):
         raise TranslationError(
             "Translation service failed"
         ) from e
-    
-
-
-
 
 def chunk_text(text, max_chars=900):
     chunks = []
@@ -69,15 +53,6 @@ def chunk_text(text, max_chars=900):
         start = end
 
     return chunks 
-
-# def translate_to_user_language(response, user_lang):
-    
-#     llmresponse = client.text.translate(
-#          input=response,
-#          source_language_code="auto",
-#          target_language_code=user_lang,
-#     )
-#     return llmresponse.translated_text
 
 def translate_to_user_language(response, user_lang):
     if not response:
@@ -114,34 +89,12 @@ def speech_to_text(filepath):
                 file=audio_file
             )
         return {
-        "transcript": response.transcript
+            "transcript": response.transcript
         }
     except:
         print("Translation to language failed::")
         raise Exception("Translation failed")
     
-
-
-# def text_to_speech(state):
-#     text=state["answer_en"]
-#     user_lang=state["user_lang"]
-#     filename="output.wav"
-
-#     response=client.text_to_speech.convert(
-#         text=text,
-#         target_language_code=user_lang
-#     )
-
-#     audio_base64=response[0]
-
-#     audio_bytes=base64.b64decode(audio_base64)
-
-#     with open(filename,"wb") as f:
-#         f.write(audio_bytes)
-#     state['filename']=filename
-#     return {
-#         'filename':filename
-#     }
 
 def text_to_speech(state):
     response = client.text_to_speech.convert(

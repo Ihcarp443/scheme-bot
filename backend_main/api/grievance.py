@@ -1,18 +1,14 @@
 # api/grievance.py
-
 from fastapi import APIRouter
 from pydantic import BaseModel
 from langgraph.types import Command
-
 from graph.graph_builder import graph
 
 router = APIRouter()
 
-
 class ResumeRequest(BaseModel):
     thread_id: str
     data: dict
-
 
 @router.post("/resume")
 async def resume_grievance(req: ResumeRequest):

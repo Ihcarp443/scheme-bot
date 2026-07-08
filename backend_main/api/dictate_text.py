@@ -17,7 +17,7 @@ async def dictate(req:DictateRequest):
     try:
         result = dictate_text(user_lang,text)
 
-        # Handle LangGraph interrupts
+        # Handling LangGraph interrupts
         return {
             "success": True,
             "interrupt": False,

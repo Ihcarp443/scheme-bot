@@ -152,7 +152,7 @@ backend/
 └── data/
 ```
 
-Copy the **Scheme_DB fodler provided separately** into this folder.
+Copy the **Scheme_DB folder provided separately** into this folder.
 
 The final structure should look like:
 

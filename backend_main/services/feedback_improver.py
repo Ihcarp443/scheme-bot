@@ -2,7 +2,6 @@
 
 from langchain_core.prompts import ChatPromptTemplate
 
-# import whatever LLM you already use
 from services.llm_service import model 
 
 

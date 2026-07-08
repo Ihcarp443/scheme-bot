@@ -41,9 +41,7 @@ const AIMessageBar = () => {
   const reasons = [
   "Too long",
   "Too short",
-  "Wrong information",
   "Hard to understand",
-  "Wrong language",
   "Other"
 ];
 

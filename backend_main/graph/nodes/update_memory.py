@@ -64,14 +64,4 @@ User message:
         print("Memory update error:", e)
 
     return {}
-    # try:
-    #     memories = json.loads(response.content)
-    #     print("MEMORY UPDATE NODE:",memories)
-    #     for key, value in memories.items():
-    #         save_memory(
-    #             user_id,
-    #             key,
-    #             str(value)
-    #         )
-        
 
