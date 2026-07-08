@@ -4,7 +4,6 @@ from langgraph.graph import (
     END
 )
 
-from langgraph.checkpoint.memory import MemorySaver
 from langgraph.checkpoint.sqlite import SqliteSaver
 
 from db.checkpoint import checkpoint_conn
@@ -12,6 +11,8 @@ from graph.state import GraphState
 
 from graph.nodes.intent import (
     grievance_entry_node,
+    intent,
+    route_intent
 )
 
 from graph.nodes.retrieve import (
@@ -38,15 +39,16 @@ from graph.nodes.grievance import (
 from graph.nodes.general import (
     general_node
 )
-from graph.nodes.tool_node import(
-    tool_agent
-)
-from graph.nodes.router_nodes import (
-    rag_router,
-    general_router,
-    grievance_router,
-    route_selected_tool
-)
+
+# from graph.nodes.tool_node import(
+#     tool_agent
+# )
+# from graph.nodes.router_nodes import (
+#     rag_router,
+#     general_router,
+#     grievance_router
+#     # route_selected_tool
+# )
 
 from graph.nodes.fetch_memory import(
     memory_fetch_node
@@ -66,6 +68,7 @@ def start_router(state):
         return "feedback"
 
     return "normal"
+
 checkpointer = SqliteSaver(conn=checkpoint_conn)
 
 builder = StateGraph(GraphState)
@@ -79,9 +82,13 @@ builder.add_node(
     text_input_node
 )
  
+# builder.add_node(
+#     "tool_agent",
+#     tool_agent
+# )
 builder.add_node(
-    "tool_agent",
-    tool_agent
+    "intent_classifier",
+    intent
 )
 
 builder.add_node(
@@ -94,25 +101,25 @@ builder.add_node(
     grievance_entry_node
 )
 
-builder.add_node(
-    "rag_router",
-    rag_router
-)
+# builder.add_node(
+#     "rag_router",
+#     rag_router
+# )
 
 builder.add_node(
     "general",
     general_node
 )
 
-builder.add_node(
-    "grievance_router",
-    grievance_router
-)
+# builder.add_node(
+#     "grievance_router",
+#     grievance_router
+# )
 
-builder.add_node(
-    "general_router",
-    general_router
-)
+# builder.add_node(
+#     "general_router",
+#     general_router
+# )
 
 builder.add_node(
     "filter",
@@ -175,28 +182,42 @@ builder.add_edge(
     "fetch_memory"
 )
 
+# builder.add_edge(
+#     "fetch_memory",
+#     "tool_agent"
+# )
+
 builder.add_edge(
     "fetch_memory",
-    "tool_agent"
+    "intent_classifier"
 )
 
 builder.add_conditional_edges(
-    "tool_agent",
-    route_selected_tool,
+    "intent_classifier",
+    route_intent,
     {
-        "rag": "rag_router",
-        "grievance": "grievance_router",
-        "general": "general_router"
+        "rag": "filter",
+        "grievance": "grievance_entry",
+        "general": "general"
     }
 )
+# builder.add_conditional_edges(
+#     "tool_agent",
+#     route_selected_tool,
+#     {
+#         "rag": "rag_router",
+#         "grievance": "grievance_router",
+#         "general": "general_router"
+#     }
+# )
 
 # =========================
 # RAG Flow
 # =========================
-builder.add_edge(
-    "rag_router",
-    "filter"
-)
+# builder.add_edge(
+#     "rag_router",
+#     "filter"
+# )
 
 builder.add_edge(
     "filter",
@@ -216,10 +237,10 @@ builder.add_edge(
 # =========================
 # Grievance Flow
 # =========================
-builder.add_edge(
-    "grievance_router",
-    "grievance_entry"
-)
+# builder.add_edge(
+#     "grievance_router",
+#     "grievance_entry"
+# )
 
 builder.add_edge(
     "grievance_entry",
@@ -240,10 +261,10 @@ builder.add_edge(
 # General Flow
 # =========================
 
-builder.add_edge(
-    "general_router",
-    "general"
-)
+# builder.add_edge(
+#     "general_router",
+#     "general"
+# )
 
 builder.add_edge("general", "update_memory")
 

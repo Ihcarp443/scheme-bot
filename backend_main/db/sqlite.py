@@ -43,6 +43,19 @@ def init_db():
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)
+
+
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS memories (
+            user_id TEXT,
+            key TEXT,
+            value TEXT,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+            PRIMARY KEY (user_id, key)
+        )
+    """)
+
     conn.commit()
     conn.close()
 

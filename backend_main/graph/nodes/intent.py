@@ -72,3 +72,44 @@ def grievance_entry_node(state: GraphState):
             "issue_type": issue_type
         }
     }
+
+
+def intent(state: GraphState):
+    query = state["query_en"]
+    memory = state.get("memory", {})
+
+    prompt = f"""
+    Classify the user's intent into exactly one of these words:
+
+    rag
+    grievance
+    general
+
+    Rules:
+    - rag: scheme information, eligibility, benefits, documents, application process
+    - grievance: complaints, payment issues, application status, rejection, delays
+    - general: greetings, casual conversation, or unrelated topics
+
+    User Memory:
+    {memory}
+
+    Query:
+    {query}
+
+    Return only one word.
+    """
+
+    response = model.invoke(prompt)
+
+    intent = response.content.strip().lower()
+
+    if intent not in {"rag", "grievance", "general"}:
+        intent = "general"
+
+    return {
+        "intent": intent
+    }
+
+
+def route_intent(state: GraphState):
+    return state["intent"]

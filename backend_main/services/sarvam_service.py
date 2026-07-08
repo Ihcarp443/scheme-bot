@@ -1,7 +1,6 @@
 from sarvamai import SarvamAI
 from dotenv import load_dotenv
 import os
-
 from services.exceptions import(
     TranslationError,
     UnsupportedLanguageError
@@ -9,11 +8,12 @@ from services.exceptions import(
 from sarvamai.errors import UnprocessableEntityError
 
 load_dotenv()
-print("API KEY:", os.getenv("SARVAM_API_KEY"))
+
+# print("API KEY:", os.getenv("SARVAM_API_KEY"))
+
 client = SarvamAI(
     api_subscription_key=os.getenv("SARVAM_API_KEY")
 )
-
 
 def translate_to_english(query):
     try:
@@ -89,7 +89,7 @@ def speech_to_text(filepath):
                 file=audio_file
             )
         return {
-        "transcript": response.transcript
+            "transcript": response.transcript
         }
     except:
         print("Translation to language failed::")
