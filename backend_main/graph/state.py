@@ -16,7 +16,7 @@ class GraphState(TypedDict, total=False):
     channel:str
     user_lang: str
     query_en: str
-    filters: dict
+    # filters: dict
     docs: list
     answer_en: str
     final_answer: str
@@ -33,3 +33,4 @@ class GraphState(TypedDict, total=False):
     original_answer: str
     feedback_reason: str
     feedback_comment: str
+    

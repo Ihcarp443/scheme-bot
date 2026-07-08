@@ -5,7 +5,6 @@ vectordb = load_vector_db()
 
 def retrieve_documents(
     query: str,
-    filters: dict = None,
     k: int = 5
 ):
 
@@ -13,8 +12,7 @@ def retrieve_documents(
 
         docs = vectordb.similarity_search(
             query=query,
-            k=k,
-            filter=filters
+            k=k
         )
 
         return docs

@@ -67,92 +67,6 @@ def rewrite_query(query,memory):
     return data
 
 
-def extract_filters_from_llm_node(state: GraphState):
-    print('Extracting filters from LLM for query:', state["query_en"])
-    FILTER_PROMPT = """
-        You are an intelligent query parser for a government policy chatbot.
-
-        You are given:
-        - User Query
-        - Expanded Query
-        - User Memory
-
-        Your task is to extract structured filters.
-
-        User Memory:
-        {memory}
-
-        Original Query:
-        {query}
-
-        Expanded Query:
-        {expanded_query}
-
-        Extract:
-
-        - policy_name
-        - sector
-        - section
-
-        Rules:
-        - Prefer memory ONLY for missing context
-        - DO NOT assume new attributes
-        - DO NOT hallucinate eligibility conditions
-        - Only extract what is clearly supported
-        - Normalize section to:
-          eligibility, benefits, application_process, documents_required, faq, exclusions
-
-        Return ONLY JSON.
-
-        For example (may contains additional key_values):
-        Query:
-        "What are benefits of PM Kisan?"
-
-        Output:
-        {{
-            "policy_name": "PM Kisan",
-            "section": "benefits",
-            "sector": null
-        }}
-        """
-    query = state["query_en"]
-    memory=state.get("memory",{})
-    new_data=rewrite_query(query,memory)
-    expanded_query=new_data["expanded_query"]
-    prompt = FILTER_PROMPT.format(
-        query=query,
-        expanded_query=new_data["expanded_query"],
-        memory=json.dumps(memory, indent=2)
-    )
-    # print("Filter Extraction Prompt:", prompt)
-    response = model.invoke(prompt)
-    # print("LLM Filter Extraction Response:", response.content)
-
-    try:
-        filters = json.loads(
-            response.content
-        )
-
-    except Exception:
-
-        filters = {}
-
-    # print(type(filters))
-    print("Extracted Filters:", filters)
-    filters = {
-        k: v
-        for k, v in filters.items()
-        if v not in [None, "", "null","None"]
-    }
-
-    print("Extracted Filters:", filters)
-
-    return {
-        "filters": filters,
-        "expanded_query": expanded_query,
-        "keywords": new_data["keywords"]
-    }
-
 def retrieve_node(state: GraphState):
     print("Retrieving documents...")
 
@@ -163,40 +77,15 @@ def retrieve_node(state: GraphState):
     # 2. Merge queries (your chosen approach)
     query = f"{expanded_query}\n{original_query}"
 
-    # 3. Get filters
-    filters = state.get("filters", {})
-
     results = []
 
     # 4. Primary retrieval (hybrid)
     try:
         results = retrieve_documents(
             query=query,
-            filters=filters
         )
     except Exception:
         results = []
-
-    # 5. Fallback 1: relaxed filter (ONLY policy_name)
-    if not results:
-        print("No results with filters. Trying fallback...")
-
-        if "policy_name" in filters:
-            try:
-                results = retrieve_documents(
-                    query=query,
-                    filters={"policy_name": filters["policy_name"]}
-                )
-            except Exception:
-                pass
-
-    # 6. Fallback 2: semantic only
-    if not results:
-        print("No results from fallback. Using pure semantic search...")
-        try:
-            results = retrieve_documents(query)
-        except Exception:
-            results = []
 
     print(f"Retrieved {len(results)} documents")
 

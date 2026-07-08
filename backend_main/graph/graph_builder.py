@@ -16,7 +16,6 @@ from graph.nodes.intent import (
 )
 
 from graph.nodes.retrieve import (
-    extract_filters_from_llm_node,
     retrieve_node
 )
 
@@ -40,15 +39,6 @@ from graph.nodes.general import (
     general_node
 )
 
-# from graph.nodes.tool_node import(
-#     tool_agent
-# )
-# from graph.nodes.router_nodes import (
-#     rag_router,
-#     general_router,
-#     grievance_router
-#     # route_selected_tool
-# )
 
 from graph.nodes.fetch_memory import(
     memory_fetch_node
@@ -82,10 +72,6 @@ builder.add_node(
     text_input_node
 )
  
-# builder.add_node(
-#     "tool_agent",
-#     tool_agent
-# )
 builder.add_node(
     "intent_classifier",
     intent
@@ -101,30 +87,11 @@ builder.add_node(
     grievance_entry_node
 )
 
-# builder.add_node(
-#     "rag_router",
-#     rag_router
-# )
-
 builder.add_node(
     "general",
     general_node
 )
 
-# builder.add_node(
-#     "grievance_router",
-#     grievance_router
-# )
-
-# builder.add_node(
-#     "general_router",
-#     general_router
-# )
-
-builder.add_node(
-    "filter",
-    extract_filters_from_llm_node
-)
 
 builder.add_node(
     "retrieve",
@@ -182,47 +149,27 @@ builder.add_edge(
     "fetch_memory"
 )
 
-# builder.add_edge(
-#     "fetch_memory",
-#     "tool_agent"
-# )
-
 builder.add_edge(
     "fetch_memory",
     "intent_classifier"
 )
 
+
 builder.add_conditional_edges(
     "intent_classifier",
     route_intent,
     {
-        "rag": "filter",
+        "rag": "retrieve",
         "grievance": "grievance_entry",
         "general": "general"
     }
 )
-# builder.add_conditional_edges(
-#     "tool_agent",
-#     route_selected_tool,
-#     {
-#         "rag": "rag_router",
-#         "grievance": "grievance_router",
-#         "general": "general_router"
-#     }
-# )
+
 
 # =========================
 # RAG Flow
 # =========================
-# builder.add_edge(
-#     "rag_router",
-#     "filter"
-# )
 
-builder.add_edge(
-    "filter",
-    "retrieve"
-)
 
 builder.add_edge(
     "retrieve",
@@ -237,10 +184,6 @@ builder.add_edge(
 # =========================
 # Grievance Flow
 # =========================
-# builder.add_edge(
-#     "grievance_router",
-#     "grievance_entry"
-# )
 
 builder.add_edge(
     "grievance_entry",
@@ -261,10 +204,6 @@ builder.add_edge(
 # General Flow
 # =========================
 
-# builder.add_edge(
-#     "general_router",
-#     "general"
-# )
 
 builder.add_edge("general", "update_memory")
 
