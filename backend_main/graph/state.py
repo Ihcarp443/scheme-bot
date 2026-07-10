@@ -33,4 +33,7 @@ class GraphState(TypedDict, total=False):
     original_answer: str
     feedback_reason: str
     feedback_comment: str
-    
+
+    web_context: str
+    agent_trace: list  
+    agent_summary: str
