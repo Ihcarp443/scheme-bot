@@ -8,7 +8,6 @@ whether to call another tool or stop -- at every step, not just once.
 
 import json
 from langchain_core.tools import tool
-# from langgraph.prebuilt import create_react_agent
 from langchain_core.messages import HumanMessage
 from langchain.agents import create_agent
 from services.llm_service import model
@@ -67,47 +66,45 @@ def rewrite_query(query: str, memory_json: str = "{}") -> str:
     except Exception:
         return json.dumps({"expanded_query": query, "keywords": []})
 
+# @tool
+# def extract_filters(query: str) -> str:
+#     """Extract structured filters (policy_name, sector, section) from the query.
+#     Use this before FAISS retrieval when the query mentions a specific scheme
+#     or a specific topic (eligibility, benefits, documents, etc)."""
+#     prompt = f"""
+#     Extract structured filters from this government scheme query.
+
+#     Extract: policy_name, sector, section
+#     Normalize section to: eligibility, benefits, application_process,
+#     documents_required, faq, exclusions
+
+#     Return ONLY JSON. Use null for anything not clearly present.
+
+#     Query: {query}
+#     """
+#     response = model.invoke(prompt)
+#     try:
+#         content = response.content.strip().replace("```json", "").replace("```", "")
+#         filters = json.loads(content)
+#         filters = {k: v for k, v in filters.items() if v not in [None, "", "null", "None"]}
+#         return json.dumps(filters)
+#     except Exception:
+#         return json.dumps({})
 
 @tool
-def extract_filters(query: str) -> str:
-    """Extract structured filters (policy_name, sector, section) from the query.
-    Use this before FAISS retrieval when the query mentions a specific scheme
-    or a specific topic (eligibility, benefits, documents, etc)."""
-    prompt = f"""
-    Extract structured filters from this government scheme query.
-
-    Extract: policy_name, sector, section
-    Normalize section to: eligibility, benefits, application_process,
-    documents_required, faq, exclusions
-
-    Return ONLY JSON. Use null for anything not clearly present.
-
-    Query: {query}
-    """
-    response = model.invoke(prompt)
-    try:
-        content = response.content.strip().replace("```json", "").replace("```", "")
-        filters = json.loads(content)
-        filters = {k: v for k, v in filters.items() if v not in [None, "", "null", "None"]}
-        return json.dumps(filters)
-    except Exception:
-        return json.dumps({})
-
-
-@tool
-def retrieve_faiss(query: str, filters_json: str = "{}") -> str:
+def retrieve_faiss(query: str) -> str:
     """Search the internal government scheme knowledge base (FAISS).
-    This is the primary source and should usually be tried first.
-    Pass filters as a JSON string if you have them, else '{}'."""
-    filters = json.loads(filters_json) if filters_json else {}
+    This is the primary source and should usually be tried first."""
     try:
-        results = retrieve_documents(query=query, filters=filters)
+        results = retrieve_documents(query=query)
+        results_content = [doc.page_content for doc in results]
+    
     except Exception as e:
         return f"FAISS retrieval failed: {e}"
 
     if not results:
         return "No results found in internal knowledge base."
-    return json.dumps(results)
+    return json.dumps(results_content)
 
 
 @tool
@@ -143,8 +140,6 @@ Guidelines:
   most queries.
 - Use fetch_user_memory only when the query is personal/needs profile context.
 - Use rewrite_query only if the raw query is too vague to search well.
-- Use extract_filters when the query references a specific scheme, sector,
-  or section.
 - Use duckduckgo_search ONLY as a supplement -- for recent news, new
   schemes, or amendments, or when retrieve_faiss returns nothing useful.
 - Do not call the same tool more than twice.
@@ -155,10 +150,9 @@ Guidelines:
 
 agentic_rag_agent = create_agent(
     model,
-    tools=[fetch_user_memory, rewrite_query, extract_filters, retrieve_faiss, duckduckgo_search],
+    tools=[fetch_user_memory, rewrite_query, retrieve_faiss, duckduckgo_search],
     system_prompt=SYSTEM_PROMPT
 )
-
 
 # ==========================================================
 # GRAPH NODE
@@ -212,7 +206,6 @@ def agentic_rag_node(state: GraphState):
 
     print("Tools actually used:", tool_calls_made)
     
-
     return {
         "docs": docs,
         "web_context": web_context,

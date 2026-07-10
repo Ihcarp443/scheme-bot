@@ -3,7 +3,7 @@ import json
 def answer_node(state):
 
     context = "\n\n".join(
-        doc.page_content
+        doc
         for doc in state["docs"]
     )
 
@@ -14,10 +14,6 @@ def answer_node(state):
     user_memory = state.get("memory", {})
 
     channel = state.get("channel", "website")
-
-    web_content = state.get("web_context")
-
-    print("agent_trace", state.get("agent_trace"))
 
     
 
@@ -45,10 +41,6 @@ def answer_node(state):
     ---------------------
     Retrieved Context:
     {context}
-
-    ---------------------
-    Retrieved Context from web search tool:
-    {web_content}
 
 
     ---------------------
